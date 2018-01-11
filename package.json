@@ -1,0 +1,23 @@
+{
+  "name": "seolint",
+  "version": "0.0.1",
+  "description": "A node based SEO linting tool",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zillow/seolint.git"
+  },
+  "keywords": [
+    "lint",
+    "seo"
+  ],
+  "author": "brians@zillowgroup.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zillow/seolint/issues"
+  },
+  "homepage": "https://github.com/zillow/seolint#readme"
+}
