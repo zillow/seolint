@@ -74,22 +74,22 @@ After SEOLint renders your page, it passes the client and server content as stri
 the result of which is passed to the validator.
 You can override the parser and/or the validator in your configuration file for custom behavior.
 
-### H1TagCheck.js
+#### H1TagCheck.js
 
 Verifies that the page has one and only one `<h1>` tag.
 
-#### `parser => { clientH1s, serverH1s }`
+##### `parser => { clientH1s, serverH1s }`
 
 * `clientH1s` (`array`): Array of h1 text strings found on the client rendering
 * `serverH1s` (`array`): Array of h1 text strings found on the server rendering
 
-### TitleTagCheck.js
+#### TitleTagCheck.js
 
 Verifies that the page has a `<title>` tag with an appropriate length (no more than 60 characters).
 
 * https://moz.com/learn/seo/title-tag
 
-#### `parser => { clientTitle, serverTitle }`
+##### `parser => { clientTitle, serverTitle }`
 
 * `clientTitle` (`string`): The client rendered title text
 * `serverTitle` (`string`): The server rendered title text
@@ -98,8 +98,8 @@ Verifies that the page has a `<title>` tag with an appropriate length (no more t
 
 In the past, server-side rendering was considered mandatory for search engines to be able to crawl your website.
 Nowadays, search engines are very capable at crawling client-side rendered applications,
-however there are still some small descrepancies that SEOLint tries to identify.
-Most of the time these descrepancies come when your client-side application overwrites content that the server-side already produced (for example a meta description).
+however there are still some small discrepancies that SEOLint tries to identify.
+Most of the time these discrepancies come when your client-side application overwrites content that the server-side already produced (for example a meta description).
 We have found that it is important that either your client-side rendered application produces the same output as the the server-side rendering,
 or the values should be omitted by the server and written only by the client;
 SEOLint will validate server-side and client-side content whenever applicable.
