@@ -3,21 +3,59 @@
   "version": "0.0.1",
   "description": "A node based SEO linting tool",
   "main": "index.js",
+  "bin": {
+    "seolint": "./index.js"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run eslint && npm run mocha",
+    "mocha": "mocha 'src/**/*-test.js'",
+    "mocha-debug": "mocha --inspect-brk 'src/**/*-test.js'",
+    "eslint": "eslint 'src/**/*.js'",
+    "prettier": "prettier --single-quote --print-width 120 --tab-width 4 --write 'src/**/*.js'",
+    "prettier-pre-commit": "lib/prettier-pre-commit"
+  },
+  "pre-commit": [
+    "prettier-pre-commit",
+    "test"
+  ],
+  "author": {
+    "name": "Brian Stone",
+    "email": "brians@zillowgroup.com"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zillow/seolint/issues"
+  },
+  "homepage": "https://github.com/zillow/seolint#readme",
+  "dependencies": {
+    "chai": "^3.5.0",
+    "cheerio": "latest",
+    "colors": "^1.1.2",
+    "lodash": "^4.0.0",
+    "phantom": "^2.1.13",
+    "phantom-pool": "^1.2.2",
+    "ps-node": "^0.1.6",
+    "request": "^2.73.0",
+    "yargs": "^8.0.2"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zillow/seolint.git"
   },
   "keywords": [
-    "lint",
-    "seo"
+    "seolint",
+    "seo",
+    "lint"
   ],
-  "author": "brians@zillowgroup.com",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/zillow/seolint/issues"
-  },
-  "homepage": "https://github.com/zillow/seolint#readme"
+  "devDependencies": {
+    "eslint": "^4.0.0",
+    "eslint-config-airbnb-base": "^11.2.0",
+    "eslint-plugin-import": "^2.3.0",
+    "eslint-plugin-node": "^5.0.0",
+    "mocha": "^3.4.2",
+    "pre-commit": "^1.2.2",
+    "prettier": "^1.4.4",
+    "sinon": "^4.1.4",
+    "synchronous-promise": "^2.0.4"
+  }
 }
