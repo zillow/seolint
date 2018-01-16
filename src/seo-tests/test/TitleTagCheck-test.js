@@ -22,7 +22,7 @@ describe('TitleTagCheck.js', () => {
             );
             expect(parsed).to.eql({
                 clientTitle: 'foo',
-                serverTitle: ''
+                serverTitle: null
             });
         });
         it('server only title', () => {
@@ -32,7 +32,7 @@ describe('TitleTagCheck.js', () => {
                 '<html><head><title>bar</title></head><body></body></html>'
             );
             expect(parsed).to.eql({
-                clientTitle: '',
+                clientTitle: null,
                 serverTitle: 'bar'
             });
         });
@@ -43,8 +43,8 @@ describe('TitleTagCheck.js', () => {
                 '<html><head></head><body></body></html>'
             );
             expect(parsed).to.eql({
-                clientTitle: '',
-                serverTitle: ''
+                clientTitle: null,
+                serverTitle: null
             });
         });
     });

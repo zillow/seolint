@@ -17,7 +17,13 @@ module.exports = {
      * @param $ Cheerio instance
      * @return {string}
      */
-    getTitle: $ => $('title').text(),
+    getTitle: $ => {
+        const node = $('title');
+        if (node.length) {
+            return node.text();
+        }
+        return null;
+    },
 
     /**
      * @param $ Cheerio instance
@@ -25,6 +31,9 @@ module.exports = {
      */
     getDescription: $ => {
         const node = $('meta[name="description"]');
-        return (node && node.attr('content')) || '';
+        if (node.length) {
+            return node.attr('content');
+        }
+        return null;
     }
 };

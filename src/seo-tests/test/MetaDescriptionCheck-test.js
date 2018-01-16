@@ -22,7 +22,7 @@ describe('MetaDescriptionCheck.js', () => {
             );
             expect(parsed).to.eql({
                 clientDescription: 'client description',
-                serverDescription: ''
+                serverDescription: null
             });
         });
         it('server only description', () => {
@@ -32,7 +32,7 @@ describe('MetaDescriptionCheck.js', () => {
                 '<html><head><meta name="description" content="server description" /></head><body></body></html>'
             );
             expect(parsed).to.eql({
-                clientDescription: '',
+                clientDescription: null,
                 serverDescription: 'server description'
             });
         });
@@ -43,8 +43,8 @@ describe('MetaDescriptionCheck.js', () => {
                 '<html><head></head><body></body></html>'
             );
             expect(parsed).to.eql({
-                clientDescription: '',
-                serverDescription: ''
+                clientDescription: null,
+                serverDescription: null
             });
         });
     });

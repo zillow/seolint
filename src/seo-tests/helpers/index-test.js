@@ -16,6 +16,10 @@ describe('seo-tests helpers', () => {
             const $ = cheerio.load('<html><body><h1>Baz</h1></body></html>');
             expect(getH1s($)).to.eql(['Baz']);
         });
+        it('empty h1', () => {
+            const $ = cheerio.load('<html><body><h1></h1></body></html>');
+            expect(getH1s($)).to.eql(['']);
+        });
     });
 
     describe('getTitle', () => {
@@ -25,6 +29,10 @@ describe('seo-tests helpers', () => {
         });
         it('does not have title', () => {
             const $ = cheerio.load('<html><head></head><body></body></html>');
+            expect(getTitle($)).to.equal(null);
+        });
+        it('has empty title', () => {
+            const $ = cheerio.load('<html><head><title></title></head><body></body></html>');
             expect(getTitle($)).to.equal('');
         });
     });
@@ -39,6 +47,11 @@ describe('seo-tests helpers', () => {
 
         it('does not have description', () => {
             const $ = cheerio.load('<html><head></head><body></body></html>');
+            expect(getDescription($)).to.equal(null);
+        });
+
+        it('has an emptye description', () => {
+            const $ = cheerio.load('<html><head><meta name="description" content="" /></head><body></body></html>');
             expect(getDescription($)).to.equal('');
         });
     });
