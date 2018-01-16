@@ -47,6 +47,10 @@ module.exports = function(url, providedInstance) {
                 resolve(content);
             })
             .catch(error => {
+                if (process.env.NODE_ENV === 'development') {
+                    console.log(error);
+                }
+
                 localPage.close();
                 if (localInstance) {
                     localInstance.exit();

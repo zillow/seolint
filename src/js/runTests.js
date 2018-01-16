@@ -22,6 +22,9 @@ try {
         })
         .filter(t => t);
 } catch (e) {
+    if (process.env.NODE_ENV === 'development') {
+        console.log(e);
+    }
     throw new Error(`Failed to load SEO tests: ${e}`);
 }
 
