@@ -5,7 +5,7 @@ The tool supports both server-side and client-side rendered web pages.
 
 ## Installation
 
-SEOLint requires node version 6.5.0 or greater. We highly recommend [nvm](https://github.com/creationix/nvm) for installing node.
+SEOLint requires node version 8.3.0 or greater. We highly recommend [nvm](https://github.com/creationix/nvm) for installing node.
 Once you have node/npm, you can install SEOLint globally with the following command:
 
 ```bash
