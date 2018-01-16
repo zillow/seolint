@@ -1,6 +1,6 @@
 const cheerio = require('cheerio');
 const expect = require('chai').expect;
-const { getH1s, getTitle } = require('.');
+const { getH1s, getTitle, getDescription } = require('.');
 
 describe('seo-tests helpers', () => {
     describe('getH1s', () => {
@@ -26,6 +26,20 @@ describe('seo-tests helpers', () => {
         it('does not have title', () => {
             const $ = cheerio.load('<html><head></head><body></body></html>');
             expect(getTitle($)).to.equal('');
+        });
+    });
+
+    describe('getDescription', () => {
+        it('has description', () => {
+            const $ = cheerio.load(
+                '<html><head><meta name="description" content="This is the meta description" /></head><body></body></html>'
+            );
+            expect(getDescription($)).to.equal('This is the meta description');
+        });
+
+        it('does not have description', () => {
+            const $ = cheerio.load('<html><head></head><body></body></html>');
+            expect(getDescription($)).to.equal('');
         });
     });
 });

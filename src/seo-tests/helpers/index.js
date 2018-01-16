@@ -17,5 +17,14 @@ module.exports = {
      * @param $ Cheerio instance
      * @return {string}
      */
-    getTitle: $ => $('title').text()
+    getTitle: $ => $('title').text(),
+
+    /**
+     * @param $ Cheerio instance
+     * @return {string}
+     */
+    getDescription: $ => {
+        const node = $('meta[name="description"]');
+        return (node && node.attr('content')) || '';
+    }
 };
