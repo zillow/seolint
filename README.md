@@ -67,6 +67,8 @@ module.exports = {
 }
 ```
 
+Note: If you are using a JavaScript configuration file that has third-party module dependencies (e.g. chai), make sure to install those dependencies at the location of your config file, otherwise seolint will fail. It's a good idea to `npm i --save-dev` those dependencies if your seolint config file lives alongside your `package.json`.
+
 ## SEO Tests
 
 Below are the tests run for every url you give to SEOLint. Each test consists of a parser and a validator function.
