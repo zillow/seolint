@@ -11,12 +11,9 @@ module.exports = {
         const $clientPage = cheerio.load(clientPage);
         const $serverPage = cheerio.load(serverPage);
 
-        const clientTitle = getTitle($clientPage);
-        const serverTitle = getTitle($serverPage);
-
         return {
-            clientTitle,
-            serverTitle
+            clientTitle: getTitle($clientPage),
+            serverTitle: getTitle($serverPage)
         };
     },
     validator: ({ clientTitle, serverTitle }) => {

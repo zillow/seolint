@@ -51,54 +51,39 @@ describe('TitleTagCheck.js', () => {
 
     describe('validator', () => {
         it('succeeds with client but no server title', () => {
-            const results = validator({
+            const validatorFn = validator.bind(null, {
                 clientTitle: 'foo',
                 serverTitle: ''
             });
-            expect(results).to.equal(undefined); // Returned without throwing
+            expect(validatorFn).to.not.throw();
         });
         it('succeeds with matching client and server title', () => {
-            const results = validator({
+            const validatorFn = validator.bind(null, {
                 clientTitle: 'foo',
                 serverTitle: 'foo'
             });
-            expect(results).to.equal(undefined); // Returned without throwing
+            expect(validatorFn).to.not.throw();
         });
         it('fails if client and server title do not match', () => {
-            let failed;
-            try {
-                validator({
-                    clientTitle: 'foo',
-                    serverTitle: 'bar'
-                });
-            } catch (e) {
-                failed = true;
-            }
-            expect(failed).to.equal(true);
+            const validatorFn = validator.bind(null, {
+                clientTitle: 'foo',
+                serverTitle: 'bar'
+            });
+            expect(validatorFn).to.throw();
         });
         it('fails if no title exists at all', () => {
-            let failed;
-            try {
-                validator({
-                    clientTitle: '',
-                    serverTitle: ''
-                });
-            } catch (e) {
-                failed = true;
-            }
-            expect(failed).to.equal(true);
+            const validatorFn = validator.bind(null, {
+                clientTitle: '',
+                serverTitle: ''
+            });
+            expect(validatorFn).to.throw();
         });
         it('fails if the title is over 60 characters', () => {
-            let failed;
-            try {
-                validator({
-                    clientTitle: 'abcdefghijklmnopqrstuvwxyz abcdefghijklmnopqrstuvwxyz abcdefghijklmnopqrstuvwxyz',
-                    serverTitle: 'abcdefghijklmnopqrstuvwxyz abcdefghijklmnopqrstuvwxyz abcdefghijklmnopqrstuvwxyz'
-                });
-            } catch (e) {
-                failed = true;
-            }
-            expect(failed).to.equal(true);
+            const validatorFn = validator.bind(null, {
+                clientTitle: 'abcdefghijklmnopqrstuvwxyz abcdefghijklmnopqrstuvwxyz abcdefghijklmnopqrstuvwxyz',
+                serverTitle: 'abcdefghijklmnopqrstuvwxyz abcdefghijklmnopqrstuvwxyz abcdefghijklmnopqrstuvwxyz'
+            });
+            expect(validatorFn).to.throw();
         });
     });
 });

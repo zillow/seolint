@@ -10,12 +10,9 @@ module.exports = {
         const $clientPage = cheerio.load(clientPage);
         const $serverPage = cheerio.load(serverPage);
 
-        const clientH1s = getH1s($clientPage);
-        const serverH1s = getH1s($serverPage);
-
         return {
-            clientH1s,
-            serverH1s
+            clientH1s: getH1s($clientPage),
+            serverH1s: getH1s($serverPage)
         };
     },
     validator: ({ clientH1s, serverH1s }) => {

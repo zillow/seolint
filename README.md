@@ -98,6 +98,17 @@ Verifies that the page has a `<title>` tag with an appropriate length (no more t
 * `clientTitle` (`string`): The client rendered title text
 * `serverTitle` (`string`): The server rendered title text
 
+#### MetaDescriptionCheck.js
+
+Verifies that the page has a `<meta name="description" content="" />` tag with an appropriate length (between 50-300 characters).
+
+* https://moz.com/learn/seo/meta-description
+
+##### `parser => { clientDescription, serverDescription }`
+
+* `clientDescription` (`string`): The client rendered description content
+* `serverDescription` (`string`): The server rendered description content
+
 ## Server-side vs Client-side Rendering
 
 In the past, server-side rendering was considered mandatory for search engines to be able to crawl your website.

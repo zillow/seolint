@@ -47,66 +47,46 @@ describe('H1TagCheck.js', () => {
 
     describe('validator', () => {
         it('fails for multiple client h1s', () => {
-            let failed;
-            try {
-                validator({
-                    clientH1s: ['foo', 'bar'],
-                    serverH1s: ['foo']
-                });
-            } catch (e) {
-                failed = true;
-            }
-            expect(failed).to.equal(true);
+            const validatorFn = validator.bind(null, {
+                clientH1s: ['foo', 'bar'],
+                serverH1s: ['foo']
+            });
+            expect(validatorFn).to.throw();
         });
         it('fails for multiple server h1s', () => {
-            let failed;
-            try {
-                validator({
-                    clientH1s: ['foo'],
-                    serverH1s: ['foo', 'bar']
-                });
-            } catch (e) {
-                failed = true;
-            }
-            expect(failed).to.equal(true);
+            const validatorFn = validator.bind(null, {
+                clientH1s: ['foo'],
+                serverH1s: ['foo', 'bar']
+            });
+            expect(validatorFn).to.throw();
         });
         it('fails if client h1 does not match server h1', () => {
-            let failed;
-            try {
-                validator({
-                    clientH1s: ['foo'],
-                    serverH1s: ['bar']
-                });
-            } catch (e) {
-                failed = true;
-            }
-            expect(failed).to.equal(true);
+            const validatorFn = validator.bind(null, {
+                clientH1s: ['foo'],
+                serverH1s: ['bar']
+            });
+            expect(validatorFn).to.throw();
         });
         it('fails if there is no client or server h1', () => {
-            let failed;
-            try {
-                validator({
-                    clientH1s: [],
-                    serverH1s: []
-                });
-            } catch (e) {
-                failed = true;
-            }
-            expect(failed).to.equal(true);
+            const validatorFn = validator.bind(null, {
+                clientH1s: [],
+                serverH1s: []
+            });
+            expect(validatorFn).to.throw();
         });
         it('succeeds for client only h1', () => {
-            const result = validator({
+            const validatorFn = validator.bind(null, {
                 clientH1s: ['Foo'],
                 serverH1s: []
             });
-            expect(result).to.equal(undefined); // Returned without throwing
+            expect(validatorFn).to.not.throw();
         });
         it('succeeds for matching client/server h1s', () => {
-            const result = validator({
+            const validatorFn = validator.bind(null, {
                 clientH1s: ['Foo'],
                 serverH1s: ['Foo']
             });
-            expect(result).to.equal(undefined); // Returned without throwing
+            expect(validatorFn).to.not.throw();
         });
     });
 });
