@@ -3,13 +3,13 @@
 SEOLint is a linting tool for validating SEO best practices on your web pages.
 The tool supports both server-side and client-side rendered web pages.
 
-## Installation
+## Installation & Upgrading
 
 SEOLint requires node version 8.3.0 or greater. We highly recommend [nvm](https://github.com/creationix/nvm) for installing node.
-Once you have node/npm, you can install SEOLint globally with the following command:
+Once you have node/npm, you can install/upgrade SEOLint globally with the following command:
 
 ```bash
-npm install -g seolint
+npm install -g seolint@latest
 ```
 
 ## Usage
