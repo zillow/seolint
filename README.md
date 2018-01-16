@@ -34,7 +34,7 @@ seolint --help
 
 ## seolint.config.js
 
-SEOLint supports JavaScript and JSON configuration files.
+SEOLint supports JavaScript and JSON configuration files - you can see an example of each in the [examples folder](https://github.com/zillow/seolint/tree/master/examples).
 
 ```javascript
 const expect = require('chai').expect;
