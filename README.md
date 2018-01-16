@@ -1,5 +1,7 @@
 # SEOLint
 
+[![npm version](https://badge.fury.io/js/seolint.svg)](https://badge.fury.io/js/seolint)
+
 SEOLint is a linting tool for validating SEO best practices on your web pages.
 The tool supports both server-side and client-side rendered web pages.
 
