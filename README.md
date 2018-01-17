@@ -73,7 +73,7 @@ Note: If you are using a JavaScript configuration file that has third-party modu
 
 ## SEO Tests
 
-Below are the tests run for every url you give to SEOLint. These are general recommendations that you may want to override with custom behavior.
+Below are the tests run for every url you give to SEOLint. These are general recommendations that you may want to [override with custom behavior](https://github.com/zillow/seolint#test-customization).
 
 #### H1TagCheck.js
 
