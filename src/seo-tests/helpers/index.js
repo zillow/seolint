@@ -18,7 +18,7 @@ module.exports = {
      * @return {string}
      */
     getTitle: $ => {
-        const node = $('title');
+        const node = $('head title');
         if (node.length) {
             return node.text();
         }

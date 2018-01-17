@@ -35,6 +35,12 @@ describe('seo-tests helpers', () => {
             const $ = cheerio.load('<html><head><title></title></head><body></body></html>');
             expect(getTitle($)).to.equal('');
         });
+        it('has an svg title in the body', () => {
+            const $ = cheerio.load(
+                '<html><head><title>Page title</title></head><body><svg xmlns="http://www.w3.org/2000/svg"><title>This is an svg title</title></svg></body></html>'
+            );
+            expect(getTitle($)).to.equal('Page title');
+        });
     });
 
     describe('getDescription', () => {
