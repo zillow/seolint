@@ -109,6 +109,18 @@ Verifies that the page has a `<meta name="description" content="" />` tag with a
 * `clientDescription` (`string`): The client rendered description content
 * `serverDescription` (`string`): The server rendered description content
 
+#### ImageAltAttributeCheck.js
+
+Verifies that all `<img>` tags have an alt text attribute.
+
+* https://moz.com/learn/seo/alt-text
+* https://www.w3.org/WAI/tutorials/images/decorative/
+
+##### `parser => { clientImageAltAttributes, serverImageAltAttributes }`
+
+* `clientImageAltAttributes` (`array`): Array of client rendered image alt text attributes. A `null` value in the array means an image exists without an alt attribute defined.
+* `serverImageAltAttributes` (`array`): Array of server rendered image alt text attributes. A `null` value in the array means an image exists without an alt attribute defined.
+
 ## Server-side vs Client-side Rendering
 
 In the past, server-side rendering was considered mandatory for search engines to be able to crawl your website.

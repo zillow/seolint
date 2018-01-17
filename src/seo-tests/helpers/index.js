@@ -35,5 +35,23 @@ module.exports = {
             return node.attr('content');
         }
         return null;
+    },
+
+    /**
+     * @param $ Cheerio instance
+     * @return {string[]}
+     */
+    getImageAltAttributes: $ => {
+        return $('img')
+            .map(function() {
+                const alt = $(this).attr('alt');
+                if (typeof alt === 'undefined') {
+                    // Cheerio map excludes null/undefined values
+                    return -1;
+                }
+                return alt;
+            })
+            .get()
+            .map(v => (v === -1 ? null : v));
     }
 };
