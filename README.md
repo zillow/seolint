@@ -43,7 +43,7 @@ const expect = require('chai').expect;
 
 module.exports = {
     // {array} url configurations
-    url: [
+    urls: [
         // {string} url with default configuration
         'https://www.zillow.com/',
 
