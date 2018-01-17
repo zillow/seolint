@@ -78,7 +78,7 @@ After SEOLint renders your page, it passes the client and server content as stri
 the result of which is passed to the validator.
 You can override the parser and/or the validator in your configuration file for custom behavior.
 
-#### H1TagCheck.js
+### H1TagCheck.js
 
 Verifies that the page has one and only one `<h1>` tag.
 
@@ -87,7 +87,7 @@ Verifies that the page has one and only one `<h1>` tag.
 * `clientH1s` (`array`): Array of h1 text strings found on the client rendering
 * `serverH1s` (`array`): Array of h1 text strings found on the server rendering
 
-#### TitleTagCheck.js
+### TitleTagCheck.js
 
 Verifies that the page has a `<title>` tag with an appropriate length (no more than 60 characters).
 
@@ -98,7 +98,7 @@ Verifies that the page has a `<title>` tag with an appropriate length (no more t
 * `clientTitle` (`string`): The client rendered title text
 * `serverTitle` (`string`): The server rendered title text
 
-#### MetaDescriptionCheck.js
+### MetaDescriptionCheck.js
 
 Verifies that the page has a `<meta name="description" content="" />` tag with an appropriate length (between 50-300 characters).
 
@@ -109,7 +109,7 @@ Verifies that the page has a `<meta name="description" content="" />` tag with a
 * `clientDescription` (`string`): The client rendered description content
 * `serverDescription` (`string`): The server rendered description content
 
-#### ImageAltAttributeCheck.js
+### ImageAltAttributeCheck.js
 
 Verifies that all `<img>` tags have an alt text attribute.
 
