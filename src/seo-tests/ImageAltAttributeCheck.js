@@ -3,7 +3,8 @@ const expect = require('chai').expect;
 const { getImageAltAttributes } = require('./helpers');
 
 module.exports = {
-    description: 'Verifies that all `<img>` tags have an alt text attribute.',
+    description:
+        'Verifies that all `<img>` tags have an alt text attribute. Decorative images that don\'t add information to the content of the page should have an empty alt attribute (`alt=""`) so they can be ignored by screen readers.',
     resources: ['https://moz.com/learn/seo/alt-text', 'https://www.w3.org/WAI/tutorials/images/decorative/'],
     parser: (url, clientPage, serverPage) => {
         const $clientPage = cheerio.load(clientPage);

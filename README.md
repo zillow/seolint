@@ -112,6 +112,7 @@ Verifies that the page has a `<meta name="description" content="" />` tag with a
 ### ImageAltAttributeCheck.js
 
 Verifies that all `<img>` tags have an alt text attribute.
+Decorative images that don't add information to the content of the page should have an empty alt attribute (`alt=""`) so they can be ignored by screen readers.
 
 * https://moz.com/learn/seo/alt-text
 * https://www.w3.org/WAI/tutorials/images/decorative/
