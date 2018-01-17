@@ -73,49 +73,111 @@ Note: If you are using a JavaScript configuration file that has third-party modu
 
 ## SEO Tests
 
-Below are the tests run for every url you give to SEOLint. Each test consists of a parser and a validator function.
-After SEOLint renders your page, it passes the client and server content as strings to the parser function,
-the result of which is passed to the validator.
-You can override the parser and/or the validator in your configuration file for custom behavior.
+Below are the tests run for every url you give to SEOLint. These are general recommendations that you may want to override with custom behavior.
 
-### H1TagCheck.js
+#### H1TagCheck.js
 
 Verifies that the page has one and only one `<h1>` tag.
 
-##### `parser => { clientH1s, serverH1s }`
-
-* `clientH1s` (`array`): Array of h1 text strings found on the client rendering
-* `serverH1s` (`array`): Array of h1 text strings found on the server rendering
-
-### TitleTagCheck.js
+#### TitleTagCheck.js
 
 Verifies that the page has a `<title>` tag with an appropriate length (no more than 60 characters).
 
 * https://moz.com/learn/seo/title-tag
 
-##### `parser => { clientTitle, serverTitle }`
-
-* `clientTitle` (`string`): The client rendered title text
-* `serverTitle` (`string`): The server rendered title text
-
-### MetaDescriptionCheck.js
+#### MetaDescriptionCheck.js
 
 Verifies that the page has a `<meta name="description" content="" />` tag with an appropriate length (between 50-300 characters).
 
 * https://moz.com/learn/seo/meta-description
 
-##### `parser => { clientDescription, serverDescription }`
-
-* `clientDescription` (`string`): The client rendered description content
-* `serverDescription` (`string`): The server rendered description content
-
-### ImageAltAttributeCheck.js
+#### ImageAltAttributeCheck.js
 
 Verifies that all `<img>` tags have an alt text attribute.
 Decorative images that don't add information to the content of the page should have an empty alt attribute (`alt=""`) so they can be ignored by screen readers.
 
 * https://moz.com/learn/seo/alt-text
 * https://www.w3.org/WAI/tutorials/images/decorative/
+
+## Test Customization
+
+In some cases, you will want to override the default behavior of tests in your configuration file.
+Each test consists of a parser and a validator function.
+After SEOLint renders your page, it passes all the render data to the parser function,
+the result of which is passed to the validator.
+
+Client rendering is done with [PhantomJs](https://github.com/amir20/phantomjs-node) and server rendering is done with [request](https://github.com/request/request).
+
+### `parser(data)`
+
+Below is the structure of parser `data`:
+
+```javascript
+{
+    // {string} The url of the string being tested
+    url: '',
+    
+    // {object} Data from the client render
+    client: {
+        // {string} The HTML content rendered by the client
+        content: '',
+        
+        // {object} Resource data for each requested resource
+        resources: {
+            'resource url': {
+                // {object} The requestData returned from phantom's onResourceRequested
+                request: {},
+
+                // {object} The response returned from phantom's onResourceReceived
+                response: {}
+            }
+        }
+    },
+    
+    // {object} Data from the server render
+    server: {
+        // {string} The HTML content rendered by the server
+        content: '',
+        
+        // {object} The response object from the request API
+        response: {}
+    }
+}
+```
+
+### `validator()`
+
+Validators are simple functions that take the output of the parser function as input. If the validator runs without throwing an error, the test is successful. If you want the validator to fail, just throw an error. The default validators use the [chai assertion library](http://chaijs.com/api/bdd/) for validating the parsed page data.
+
+### SEO Test Defaults
+
+SEO tests were broken up into separate parsers and validators so that you can tweak validation conditions without having to re-parse the render data.
+You can override the parser, the validator, or both, but be mindful when changing the parser as it will also change the input to the validator.
+
+Below you will find the default return values for all the SEO tests.
+
+#### H1TagCheck.js
+
+##### `parser => { clientH1s, serverH1s }`
+
+* `clientH1s` (`array`): Array of h1 text strings found on the client rendering
+* `serverH1s` (`array`): Array of h1 text strings found on the server rendering
+
+#### TitleTagCheck.js
+
+##### `parser => { clientTitle, serverTitle }`
+
+* `clientTitle` (`string`): The client rendered title text
+* `serverTitle` (`string`): The server rendered title text
+
+#### MetaDescriptionCheck.js
+
+##### `parser => { clientDescription, serverDescription }`
+
+* `clientDescription` (`string`): The client rendered description content
+* `serverDescription` (`string`): The server rendered description content
+
+#### ImageAltAttributeCheck.js
 
 ##### `parser => { clientImageAltAttributes, serverImageAltAttributes }`
 
