@@ -4,44 +4,52 @@ const { parser, validator } = require('../MetaDescriptionCheck');
 describe('MetaDescriptionCheck.js', () => {
     describe('parser', () => {
         it('client and server description', () => {
-            const parsed = parser(
-                'http://example.com',
-                '<html><head><meta name="description" content="client description" /></head><body></body></html>',
-                '<html><head><meta name="description" content="server description" /></head><body></body></html>'
-            );
+            const parsed = parser({
+                client: {
+                    content:
+                        '<html><head><meta name="description" content="client description" /></head><body></body></html>'
+                },
+                server: {
+                    content:
+                        '<html><head><meta name="description" content="server description" /></head><body></body></html>'
+                }
+            });
             expect(parsed).to.eql({
                 clientDescription: 'client description',
                 serverDescription: 'server description'
             });
         });
         it('client only description', () => {
-            const parsed = parser(
-                'http://example.com',
-                '<html><head><meta name="description" content="client description" /></head><body></body></html>',
-                '<html><head></head><body></body></html>'
-            );
+            const parsed = parser({
+                client: {
+                    content:
+                        '<html><head><meta name="description" content="client description" /></head><body></body></html>'
+                },
+                server: { content: '<html><head></head><body></body></html>' }
+            });
             expect(parsed).to.eql({
                 clientDescription: 'client description',
                 serverDescription: null
             });
         });
         it('server only description', () => {
-            const parsed = parser(
-                'http://example.com',
-                '<html><head></head><body></body></html>',
-                '<html><head><meta name="description" content="server description" /></head><body></body></html>'
-            );
+            const parsed = parser({
+                client: { content: '<html><head></head><body></body></html>' },
+                server: {
+                    content:
+                        '<html><head><meta name="description" content="server description" /></head><body></body></html>'
+                }
+            });
             expect(parsed).to.eql({
                 clientDescription: null,
                 serverDescription: 'server description'
             });
         });
         it('no description', () => {
-            const parsed = parser(
-                'http://example.com',
-                '<html><head></head><body></body></html>',
-                '<html><head></head><body></body></html>'
-            );
+            const parsed = parser({
+                client: { content: '<html><head></head><body></body></html>' },
+                server: { content: '<html><head></head><body></body></html>' }
+            });
             expect(parsed).to.eql({
                 clientDescription: null,
                 serverDescription: null

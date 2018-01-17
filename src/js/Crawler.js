@@ -66,10 +66,10 @@ Crawler.prototype.crawl = function(urls) {
             return Promise.all([clientPromise, serverPromise]).then(
                 // Successfully client/server rendered page
                 pages => {
-                    const clientPage = pages[0];
-                    const serverPage = pages[1];
-                    this.pages[url] = { clientPage, serverPage };
-                    this.emit('pageEnd', url, clientPage, serverPage);
+                    const client = pages[0];
+                    const server = pages[1];
+                    this.pages[url] = { client, server };
+                    this.emit('pageEnd', url, client, server);
                 },
                 // Failed client/server render
                 error => {

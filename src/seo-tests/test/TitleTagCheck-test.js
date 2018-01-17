@@ -4,44 +4,40 @@ const { parser, validator } = require('../TitleTagCheck');
 describe('TitleTagCheck.js', () => {
     describe('parser', () => {
         it('client and server title', () => {
-            const parsed = parser(
-                'http://example.com',
-                '<html><head><title>foo</title></head><body></body></html>',
-                '<html><head><title>bar</title></head><body></body></html>'
-            );
+            const parsed = parser({
+                client: { content: '<html><head><title>foo</title></head><body></body></html>' },
+                server: { content: '<html><head><title>bar</title></head><body></body></html>' }
+            });
             expect(parsed).to.eql({
                 clientTitle: 'foo',
                 serverTitle: 'bar'
             });
         });
         it('client only title', () => {
-            const parsed = parser(
-                'http://example.com',
-                '<html><head><title>foo</title></head><body></body></html>',
-                '<html><head></head><body></body></html>'
-            );
+            const parsed = parser({
+                client: { content: '<html><head><title>foo</title></head><body></body></html>' },
+                server: { content: '<html><head></head><body></body></html>' }
+            });
             expect(parsed).to.eql({
                 clientTitle: 'foo',
                 serverTitle: null
             });
         });
         it('server only title', () => {
-            const parsed = parser(
-                'http://example.com',
-                '<html><head></head><body></body></html>',
-                '<html><head><title>bar</title></head><body></body></html>'
-            );
+            const parsed = parser({
+                client: { content: '<html><head></head><body></body></html>' },
+                server: { content: '<html><head><title>bar</title></head><body></body></html>' }
+            });
             expect(parsed).to.eql({
                 clientTitle: null,
                 serverTitle: 'bar'
             });
         });
         it('no title', () => {
-            const parsed = parser(
-                'http://example.com',
-                '<html><head></head><body></body></html>',
-                '<html><head></head><body></body></html>'
-            );
+            const parsed = parser({
+                client: { content: '<html><head></head><body></body></html>' },
+                server: { content: '<html><head></head><body></body></html>' }
+            });
             expect(parsed).to.eql({
                 clientTitle: null,
                 serverTitle: null

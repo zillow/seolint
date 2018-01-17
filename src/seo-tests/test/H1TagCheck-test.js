@@ -4,40 +4,40 @@ const { parser, validator } = require('../H1TagCheck');
 describe('H1TagCheck.js', () => {
     describe('parser', () => {
         it('multiple h1s', () => {
-            const parsed = parser(
-                'http://example.com',
-                '<html><body><h1>foo</h1><h1>bar</h1></body></html>',
-                '<html><body><h1>baz</h1></body></html>'
-            );
+            const parsed = parser({
+                client: { content: '<html><body><h1>foo</h1><h1>bar</h1></body></html>' },
+                server: { content: '<html><body><h1>baz</h1></body></html>' }
+            });
             expect(parsed).to.eql({
                 clientH1s: ['foo', 'bar'],
                 serverH1s: ['baz']
             });
         });
         it('no h1s', () => {
-            const parsed = parser('http://example.com', '<html><body></body></html>', '<html><body></body></html>');
+            const parsed = parser({
+                client: { content: '<html><body></body></html>' },
+                server: { content: '<html><body></body></html>' }
+            });
             expect(parsed).to.eql({
                 clientH1s: [],
                 serverH1s: []
             });
         });
         it('server only h1', () => {
-            const parsed = parser(
-                'http://example.com',
-                '<html><body></body></html>',
-                '<html><body><h1>baz</h1></body></html>'
-            );
+            const parsed = parser({
+                client: { content: '<html><body></body></html>' },
+                server: { content: '<html><body><h1>baz</h1></body></html>' }
+            });
             expect(parsed).to.eql({
                 clientH1s: [],
                 serverH1s: ['baz']
             });
         });
         it('client only h1', () => {
-            const parsed = parser(
-                'http://example.com',
-                '<html><body><h1>foo</h1></body></html>',
-                '<html><body></body></html>'
-            );
+            const parsed = parser({
+                client: { content: '<html><body><h1>foo</h1></body></html>' },
+                server: { content: '<html><body></body></html>' }
+            });
             expect(parsed).to.eql({
                 clientH1s: ['foo'],
                 serverH1s: []

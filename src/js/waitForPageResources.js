@@ -23,19 +23,19 @@ module.exports = (page, delay = 5000, resourceWait = 10000, maxWait = 30000) => 
         const resolveDelay = _.debounce(() => {
             resolveResourceWait.cancel();
             clearTimeout(maxWaitTimeout);
-            resolve();
+            resolve(resources);
         }, delay);
 
         resolveResourceWait = _.debounce(() => {
             resolveDelay.cancel();
             clearTimeout(maxWaitTimeout);
-            resolve();
+            resolve(resources);
         }, resourceWait);
 
         maxWaitTimeout = setTimeout(() => {
             resolveDelay.cancel();
             resolveResourceWait.cancel();
-            resolve();
+            resolve(resources);
         }, maxWait);
 
         const updateResolve = () => {
@@ -48,17 +48,19 @@ module.exports = (page, delay = 5000, resourceWait = 10000, maxWait = 30000) => 
             }
         };
 
-        page.on('onResourceRequested', function({ url }) {
+        page.on('onResourceRequested', function(request) {
+            const { url } = request;
             if (!(url in resources)) {
-                resources[url] = false;
+                resources[url] = { request };
                 resourcesRequested += 1;
             }
             updateResolve();
         });
 
-        page.on('onResourceReceived', function({ url }) {
-            if (url in resources && !resources[url]) {
-                resources[url] = true;
+        page.on('onResourceReceived', function(response) {
+            const { url } = response;
+            if (url in resources && !resources[url].response) {
+                resources[url].response = response;
                 resourcesReceived += 1;
                 updateResolve();
             }

@@ -7,13 +7,13 @@ const { getDescription } = require('./helpers');
 module.exports = {
     description: 'Verifies that the page has a good meta description length',
     resources: ['https://moz.com/learn/seo/meta-description'],
-    parser: (url, clientPage, serverPage) => {
-        const $clientPage = cheerio.load(clientPage);
-        const $serverPage = cheerio.load(serverPage);
+    parser: ({ client, server }) => {
+        const $client = cheerio.load(client.content);
+        const $server = cheerio.load(server.content);
 
         return {
-            clientDescription: getDescription($clientPage),
-            serverDescription: getDescription($serverPage)
+            clientDescription: getDescription($client),
+            serverDescription: getDescription($server)
         };
     },
     validator: ({ clientDescription, serverDescription }) => {

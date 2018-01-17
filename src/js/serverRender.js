@@ -6,7 +6,7 @@ module.exports = url => {
             if (error) {
                 reject(error);
             }
-            resolve(body);
+            resolve({ content: body, response });
         });
     });
 };

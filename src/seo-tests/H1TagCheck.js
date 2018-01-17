@@ -6,13 +6,13 @@ const { getH1s } = require('./helpers');
 
 module.exports = {
     description: 'Verifies that the page has one and only one <h1> tag',
-    parser: (url, clientPage, serverPage) => {
-        const $clientPage = cheerio.load(clientPage);
-        const $serverPage = cheerio.load(serverPage);
+    parser: ({ client, server }) => {
+        const $client = cheerio.load(client.content);
+        const $server = cheerio.load(server.content);
 
         return {
-            clientH1s: getH1s($clientPage),
-            serverH1s: getH1s($serverPage)
+            clientH1s: getH1s($client),
+            serverH1s: getH1s($server)
         };
     },
     validator: ({ clientH1s, serverH1s }) => {

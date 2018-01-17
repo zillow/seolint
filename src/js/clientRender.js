@@ -10,6 +10,7 @@ module.exports = function(url, providedInstance) {
     return new Promise((resolve, reject) => {
         let localInstance;
         let localPage;
+        let localResources;
         let resourcesPromise;
 
         // If a phantom instance is already provided, use that to create the page,
@@ -36,7 +37,8 @@ module.exports = function(url, providedInstance) {
                 }
                 return resourcesPromise;
             })
-            .then(() => {
+            .then(resources => {
+                localResources = resources;
                 return localPage.property('content');
             })
             .then(content => {
@@ -44,7 +46,7 @@ module.exports = function(url, providedInstance) {
                 if (localInstance) {
                     localInstance.exit();
                 }
-                resolve(content);
+                resolve({ content, resources: localResources });
             })
             .catch(error => {
                 if (process.env.NODE_ENV === 'development') {

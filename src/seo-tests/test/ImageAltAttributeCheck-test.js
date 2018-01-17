@@ -4,44 +4,42 @@ const { parser, validator } = require('../ImageAltAttributeCheck');
 describe('ImageAltAttributeCheck.js', () => {
     describe('parser', () => {
         it('no images', () => {
-            const parsed = parser(
-                'http://example.com',
-                '<html><head></head><body></body></html>',
-                '<html><head></head><body></body></html>'
-            );
+            const parsed = parser({
+                client: { content: '<html><head></head><body></body></html>' },
+                server: { content: '<html><head></head><body></body></html>' }
+            });
             expect(parsed).to.eql({
                 clientImageAltAttributes: [],
                 serverImageAltAttributes: []
             });
         });
         it('multiple images', () => {
-            const parsed = parser(
-                'http://example.com',
-                '<html><head></head><body><img alt="foo"><img alt=""><img alt="bar"></body></html>',
-                '<html><head></head><body><img alt="bar"><img alt=""><img alt="foo"></body></html>'
-            );
+            const parsed = parser({
+                client: {
+                    content: '<html><head></head><body><img alt="foo"><img alt=""><img alt="bar"></body></html>'
+                },
+                server: { content: '<html><head></head><body><img alt="bar"><img alt=""><img alt="foo"></body></html>' }
+            });
             expect(parsed).to.eql({
                 clientImageAltAttributes: ['foo', '', 'bar'],
                 serverImageAltAttributes: ['bar', '', 'foo']
             });
         });
         it('empty string alt attribute', () => {
-            const parsed = parser(
-                'http://example.com',
-                '<html><head></head><body><img alt=""></body></html>',
-                '<html><head></head><body><img alt=""></body></html>'
-            );
+            const parsed = parser({
+                client: { content: '<html><head></head><body><img alt=""></body></html>' },
+                server: { content: '<html><head></head><body><img alt=""></body></html>' }
+            });
             expect(parsed).to.eql({
                 clientImageAltAttributes: [''],
                 serverImageAltAttributes: ['']
             });
         });
         it('missing alt attribute', () => {
-            const parsed = parser(
-                'http://example.com',
-                '<html><head></head><body><img></body></html>',
-                '<html><head></head><body><img></body></html>'
-            );
+            const parsed = parser({
+                client: { content: '<html><head></head><body><img></body></html>' },
+                server: { content: '<html><head></head><body><img></body></html>' }
+            });
             expect(parsed).to.eql({
                 clientImageAltAttributes: [null],
                 serverImageAltAttributes: [null]

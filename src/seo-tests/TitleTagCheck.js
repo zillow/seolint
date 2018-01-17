@@ -7,13 +7,13 @@ const { getTitle } = require('./helpers');
 module.exports = {
     description: 'Verifies that the page has a `<title>` tag with an appropriate length (no more than 60 characters).',
     resources: ['https://moz.com/learn/seo/title-tag'],
-    parser: (url, clientPage, serverPage) => {
-        const $clientPage = cheerio.load(clientPage);
-        const $serverPage = cheerio.load(serverPage);
+    parser: ({ client, server }) => {
+        const $client = cheerio.load(client.content);
+        const $server = cheerio.load(server.content);
 
         return {
-            clientTitle: getTitle($clientPage),
-            serverTitle: getTitle($serverPage)
+            clientTitle: getTitle($client),
+            serverTitle: getTitle($server)
         };
     },
     validator: ({ clientTitle, serverTitle }) => {

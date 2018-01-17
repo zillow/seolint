@@ -33,7 +33,7 @@ module.exports = (pages, routeConfig) => {
     let failCount = 0;
 
     console.log('Begin testing...');
-    _.forEach(pages, ({ clientPage, serverPage }, url) => {
+    _.forEach(pages, ({ client, server }, url) => {
         console.log(`  Testing: ${url}`);
         const config = routeConfig[url] || {};
 
@@ -62,7 +62,7 @@ module.exports = (pages, routeConfig) => {
             }
 
             // Parse the pages for validation data
-            const parsed = parserFn(url, clientPage, serverPage);
+            const parsed = parserFn({ url, client, server });
 
             let success = true;
             try {
