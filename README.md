@@ -22,7 +22,7 @@ To run SEOLint on a single url:
 seolint https://www.zillow.com/
 ```
 
-To run with a configuration file:
+To run with a [configuration file](https://github.com/zillow/seolint#seolintconfigjs):
 
 ```bash
 seolint --config seolint.config.js
@@ -61,6 +61,16 @@ Decorative images that don't add information to the content of the page should h
 
 * https://moz.com/learn/seo/alt-text
 * https://www.w3.org/WAI/tutorials/images/decorative/
+
+## Server-side vs Client-side Rendering
+
+In the past, server-side rendering was considered mandatory for search engines to be able to crawl your website.
+Nowadays, search engines are very capable at crawling client-side rendered applications,
+however there are still some small discrepancies that SEOLint tries to identify.
+Most of the time these discrepancies come when your client-side application overwrites content that the server-side already produced (for example a meta description).
+We have found that it is important that either your client-side rendered application produces the same output as the the server-side rendering,
+or the values should be omitted by the server and written only by the client;
+SEOLint will validate server-side and client-side content whenever applicable.
 
 ## seolint.config.js
 
@@ -183,13 +193,3 @@ Below you will find the default return values for all the SEO tests.
 
 * `clientImageAltAttributes` (`array`): Array of client rendered image alt text attributes. A `null` value in the array means an image exists without an alt attribute defined.
 * `serverImageAltAttributes` (`array`): Array of server rendered image alt text attributes. A `null` value in the array means an image exists without an alt attribute defined.
-
-## Server-side vs Client-side Rendering
-
-In the past, server-side rendering was considered mandatory for search engines to be able to crawl your website.
-Nowadays, search engines are very capable at crawling client-side rendered applications,
-however there are still some small discrepancies that SEOLint tries to identify.
-Most of the time these discrepancies come when your client-side application overwrites content that the server-side already produced (for example a meta description).
-We have found that it is important that either your client-side rendered application produces the same output as the the server-side rendering,
-or the values should be omitted by the server and written only by the client;
-SEOLint will validate server-side and client-side content whenever applicable.
