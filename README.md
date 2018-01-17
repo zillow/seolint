@@ -34,6 +34,34 @@ To see the full usage information:
 seolint --help
 ```
 
+## SEO Tests
+
+Below are the tests run for every url you give to SEOLint. These are general recommendations that you may want to [override with custom behavior](https://github.com/zillow/seolint#test-customization).
+
+#### H1TagCheck.js
+
+Verifies that the page has one and only one `<h1>` tag.
+
+#### TitleTagCheck.js
+
+Verifies that the page has a `<title>` tag with an appropriate length (no more than 60 characters).
+
+* https://moz.com/learn/seo/title-tag
+
+#### MetaDescriptionCheck.js
+
+Verifies that the page has a `<meta name="description" content="" />` tag with an appropriate length (between 50-300 characters).
+
+* https://moz.com/learn/seo/meta-description
+
+#### ImageAltAttributeCheck.js
+
+Verifies that all `<img>` tags have an alt text attribute.
+Decorative images that don't add information to the content of the page should have an empty alt attribute (`alt=""`) so they can be ignored by screen readers.
+
+* https://moz.com/learn/seo/alt-text
+* https://www.w3.org/WAI/tutorials/images/decorative/
+
 ## seolint.config.js
 
 SEOLint supports JavaScript and JSON configuration files - you can see an example of each in the [examples folder](https://github.com/zillow/seolint/tree/master/examples).
@@ -70,34 +98,6 @@ module.exports = {
 ```
 
 Note: If you are using a JavaScript configuration file that has third-party module dependencies (e.g. chai), make sure to install those dependencies at the location of your config file, otherwise seolint will fail. It's a good idea to `npm i --save-dev` those dependencies if your seolint config file lives alongside your `package.json`.
-
-## SEO Tests
-
-Below are the tests run for every url you give to SEOLint. These are general recommendations that you may want to [override with custom behavior](https://github.com/zillow/seolint#test-customization).
-
-#### H1TagCheck.js
-
-Verifies that the page has one and only one `<h1>` tag.
-
-#### TitleTagCheck.js
-
-Verifies that the page has a `<title>` tag with an appropriate length (no more than 60 characters).
-
-* https://moz.com/learn/seo/title-tag
-
-#### MetaDescriptionCheck.js
-
-Verifies that the page has a `<meta name="description" content="" />` tag with an appropriate length (between 50-300 characters).
-
-* https://moz.com/learn/seo/meta-description
-
-#### ImageAltAttributeCheck.js
-
-Verifies that all `<img>` tags have an alt text attribute.
-Decorative images that don't add information to the content of the page should have an empty alt attribute (`alt=""`) so they can be ignored by screen readers.
-
-* https://moz.com/learn/seo/alt-text
-* https://www.w3.org/WAI/tutorials/images/decorative/
 
 ## Test Customization
 
