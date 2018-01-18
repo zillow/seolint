@@ -80,7 +80,7 @@ describe('commandLine', () => {
         });
 
         it('js config file', () => {
-            const argv = ['node', 'index.js', '--config', 'examples/mortgage.seolint.js'];
+            const argv = ['node', 'index.js', '--config', 'examples/seolint.config.js'];
             const config = parse(argv);
 
             // Turn urls into simple list of strings for easy comparison
@@ -93,7 +93,7 @@ describe('commandLine', () => {
         });
 
         it('json config file', () => {
-            const argv = ['node', 'index.js', '--config', 'examples/mlc.seolint.json'];
+            const argv = ['node', 'index.js', '--config', 'examples/seolint.config.json'];
             const config = parse(argv);
             expect(config).to.eql({
                 ...DEFAULT_CONFIG,
@@ -114,7 +114,7 @@ describe('commandLine', () => {
                 'node',
                 'index.js',
                 '--config',
-                'examples/mlc.seolint.json',
+                'examples/seolint.config.json',
                 '--hostname',
                 'https://www.example.com/'
             ];
