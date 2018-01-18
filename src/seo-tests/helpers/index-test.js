@@ -1,6 +1,6 @@
 const cheerio = require('cheerio');
 const expect = require('chai').expect;
-const { getH1s, getTitle, getDescription, getImageAltAttributes } = require('.');
+const { getH1s, getTitle, getDescription, getImageAltAttributes, getHrefs } = require('.');
 
 describe('seo-tests helpers', () => {
     describe('getH1s', () => {
@@ -86,6 +86,43 @@ describe('seo-tests helpers', () => {
         it('has image with alt attribute "-1"', () => {
             const $ = cheerio.load('<html><head></head><body><img alt="-1"></body></html>');
             expect(getImageAltAttributes($)).to.eql(['-1']);
+        });
+    });
+
+    describe('getHrefs', () => {
+        it('has an anchor with no href', () => {
+            const $ = cheerio.load('<html><head></head><body><a>test</a></body></html>');
+            expect(getHrefs($)).to.eql([]);
+        });
+        it('has an anchor with javascript href', () => {
+            const $ = cheerio.load('<html><head></head><body><a href="javascript:alert(1)">Alert 1</a></body></html>');
+            expect(getHrefs($)).to.eql([]);
+        });
+        it('has no anchors', () => {
+            const $ = cheerio.load('<html><head></head><body></body></html>');
+            expect(getHrefs($)).to.eql([]);
+        });
+        it('has multiple anchors', () => {
+            const $ = cheerio.load(
+                '<html><head></head><body><a href="https://www.zillow.com/">zillow</a><a href="http://www.example.com/">Example</a></body></html>'
+            );
+            expect(getHrefs($)).to.eql(['https://www.zillow.com/', 'http://www.example.com/']);
+        });
+        it('has a relative urls', () => {
+            const $ = cheerio.load('<html><head></head><body><a href="/foo">/foo</a></body></html>');
+            expect(getHrefs($)).to.eql(['/foo']);
+        });
+        it('has a relative url without a leading slash', () => {
+            const $ = cheerio.load('<html><head></head><body><a href="bar.html">bar.html</a></body></html>');
+            expect(getHrefs($)).to.eql(['bar.html']);
+        });
+        it('has an id anchor', () => {
+            const $ = cheerio.load('<html><head></head><body><a href="#anchor">#anchor</a></body></html>');
+            expect(getHrefs($)).to.eql(['#anchor']);
+        });
+        it('has an empty href', () => {
+            const $ = cheerio.load('<html><head></head><body><a href="">#anchor</a></body></html>');
+            expect(getHrefs($)).to.eql(['']);
         });
     });
 });

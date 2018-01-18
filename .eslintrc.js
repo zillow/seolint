@@ -26,6 +26,7 @@ module.exports = {
         'arrow-body-style': 0,
         'no-restricted-syntax': 0,
         'max-len': 0,
+        'no-script-url': 0,
         quotes: ['error', 'single', { allowTemplateLiterals: true }]
     }
 };

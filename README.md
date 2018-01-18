@@ -72,6 +72,16 @@ Verifies that the page has no mixed-content resources.
 
 * https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content
 
+#### ConsistentTrailingSlash.js
+
+Verifies that all the links on your page use consistent trailing slashes.
+
+* https://webmasters.googleblog.com/2010/04/to-slash-or-not-to-slash.html
+
+Note: Inconsistent trailing slashes are not necessarily a bad thing on their own,
+you just have to make sure that your redirects are set up correctly and you are linking to the correct version.
+Ultimately we want to prevent duplicate content and unnecessary redirects.
+
 ## Server-side vs Client-side Rendering
 
 In the past, server-side rendering was considered mandatory for search engines to be able to crawl your website.
@@ -217,3 +227,10 @@ Below you will find the default return values for all the SEO tests.
 
 * `isSecure` (`boolean`): Is the requested URL a secure page.
 * `insecureResources` (`array`): An array of insecure URLs requested by the page.
+
+#### ConsistentTrailingSlash.js
+
+##### `parser => { hrefsWithoutSlash, hrefs }`
+
+* `hrefsWithoutSlash` (`array`): An array of all hrefs from the same domain that do not have a trailing slash.
+* `href` (`array`): An array of all hrefs found on the page.
