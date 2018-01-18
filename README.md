@@ -62,6 +62,10 @@ Decorative images that don't add information to the content of the page should h
 * https://moz.com/learn/seo/alt-text
 * https://www.w3.org/WAI/tutorials/images/decorative/
 
+#### NoRedirectCheck.js
+
+Verifies that the page was not redirected. You can customize the validator to alternatively verify that the page _was_ redirected.
+
 ## Server-side vs Client-side Rendering
 
 In the past, server-side rendering was considered mandatory for search engines to be able to crawl your website.
@@ -126,12 +130,12 @@ Below is the structure of parser `data`:
 {
     // {string} The url of the string being tested
     url: '',
-    
+
     // {object} Data from the client render
     client: {
         // {string} The HTML content rendered by the client
         content: '',
-        
+
         // {object} Resource data for each requested resource
         resources: {
             'resource url': {
@@ -143,12 +147,12 @@ Below is the structure of parser `data`:
             }
         }
     },
-    
+
     // {object} Data from the server render
     server: {
         // {string} The HTML content rendered by the server
         content: '',
-        
+
         // {object} The response object from the request API
         response: {}
     }
@@ -193,3 +197,10 @@ Below you will find the default return values for all the SEO tests.
 
 * `clientImageAltAttributes` (`array`): Array of client rendered image alt text attributes. A `null` value in the array means an image exists without an alt attribute defined.
 * `serverImageAltAttributes` (`array`): Array of server rendered image alt text attributes. A `null` value in the array means an image exists without an alt attribute defined.
+
+#### NoRedirectCheck.js
+
+##### `parser => { referer, href }`
+
+* `referer` (`string`): The URL of the referring page that initiated the redirect.
+* `href` (`string`): The URL of the resulting page after the redirect.

@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-expressions */
-
 const cheerio = require('cheerio');
 const expect = require('chai').expect;
 const { getDescription } = require('./helpers');
@@ -17,6 +15,7 @@ module.exports = {
         };
     },
     validator: ({ clientDescription, serverDescription }) => {
+        // eslint-disable-next-line no-unused-expressions
         expect(clientDescription, 'all pages should have a meta description').to.not.be.empty;
 
         if (serverDescription) {

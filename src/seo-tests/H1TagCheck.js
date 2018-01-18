@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-expressions */
-
 const cheerio = require('cheerio');
 const expect = require('chai').expect;
 const { getH1s } = require('./helpers');
@@ -16,6 +14,7 @@ module.exports = {
         };
     },
     validator: ({ clientH1s, serverH1s }) => {
+        // eslint-disable-next-line no-unused-expressions
         expect(clientH1s, 'all pages should have an H1').to.not.be.empty;
 
         if (clientH1s.length) {
