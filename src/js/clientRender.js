@@ -29,6 +29,10 @@ module.exports = function(url, providedInstance) {
             .then(page => {
                 localPage = page;
                 resourcesPromise = waitForPageResources(page);
+
+                // Suppress logging page errors
+                page.on('onError', () => {});
+
                 return page.open(url);
             })
             .then(status => {
