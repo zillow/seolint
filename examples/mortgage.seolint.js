@@ -22,64 +22,64 @@ const URLS = [
     // Legacy mortgage rates
     {
         url: 'https://www.zillow.com/30_Year_Fixed_Mortgage_Rates/',
-        'CrawledPageWasRedirected.js': {
-            validator: results => {
-                expect(results.status).to.equal(200);
-                expect(new URL(results.href).pathname).to.equal('/mortgage-rates/30-year-fixed/');
+        'NoRedirectCheck.js': {
+            validator: ({ referer, href }) => {
+                expect(new URL(referer).pathname).to.equal('/30_Year_Fixed_Mortgage_Rates/');
+                expect(new URL(href).pathname).to.equal('/mortgage-rates/30-year-fixed/');
             }
         }
     },
     {
         url: 'https://www.zillow.com/20_Year_Fixed_Mortgage_Rates/',
-        'CrawledPageWasRedirected.js': {
-            validator: results => {
-                expect(results.status).to.equal(200);
-                expect(new URL(results.href).pathname).to.equal('/mortgage-rates/20-year-fixed/');
+        'NoRedirectCheck.js': {
+            validator: ({ referer, href }) => {
+                expect(new URL(referer).pathname).to.equal('/20_Year_Fixed_Mortgage_Rates/');
+                expect(new URL(href).pathname).to.equal('/mortgage-rates/20-year-fixed/');
             }
         }
     },
     {
         url: 'https://www.zillow.com/15_Year_Fixed_Mortgage_Rates/',
-        'CrawledPageWasRedirected.js': {
-            validator: results => {
-                expect(results.status).to.equal(200);
-                expect(new URL(results.href).pathname).to.equal('/mortgage-rates/15-year-fixed/');
+        'NoRedirectCheck.js': {
+            validator: ({ referer, href }) => {
+                expect(new URL(referer).pathname).to.equal('/15_Year_Fixed_Mortgage_Rates/');
+                expect(new URL(href).pathname).to.equal('/mortgage-rates/15-year-fixed/');
             }
         }
     },
     {
         url: 'https://www.zillow.com/7-1_ARM_Mortgage_Rates/',
-        'CrawledPageWasRedirected.js': {
-            validator: results => {
-                expect(results.status).to.equal(200);
-                expect(new URL(results.href).pathname).to.equal('/mortgage-rates/7-1-arm/');
+        'NoRedirectCheck.js': {
+            validator: ({ referer, href }) => {
+                expect(new URL(referer).pathname).to.equal('/7-1_ARM_Mortgage_Rates/');
+                expect(new URL(href).pathname).to.equal('/mortgage-rates/7-1-arm/');
             }
         }
     },
     {
         url: 'https://www.zillow.com/5-1_ARM_Mortgage_Rates/',
-        'CrawledPageWasRedirected.js': {
-            validator: results => {
-                expect(results.status).to.equal(200);
-                expect(new URL(results.href).pathname).to.equal('/mortgage-rates/5-1-arm/');
+        'NoRedirectCheck.js': {
+            validator: ({ referer, href }) => {
+                expect(new URL(referer).pathname).to.equal('/5-1_ARM_Mortgage_Rates/');
+                expect(new URL(href).pathname).to.equal('/mortgage-rates/5-1-arm/');
             }
         }
     },
     {
         url: 'https://www.zillow.com/Washington_Mortgage_Rates/',
-        'CrawledPageWasRedirected.js': {
-            validator: results => {
-                expect(results.status).to.equal(200);
-                expect(new URL(results.href).pathname).to.equal('/mortgage-rates/wa/');
+        'NoRedirectCheck.js': {
+            validator: ({ referer, href }) => {
+                expect(new URL(referer).pathname).to.equal('/Washington_Mortgage_Rates/');
+                expect(new URL(href).pathname).to.equal('/mortgage-rates/wa/');
             }
         }
     },
     {
         url: 'https://www.zillow.com/Mortgage_Rates/',
-        'CrawledPageWasRedirected.js': {
-            validator: results => {
-                expect(results.status).to.equal(200);
-                expect(new URL(results.href).pathname).to.equal('/mortgage-rates/');
+        'NoRedirectCheck.js': {
+            validator: ({ referer, href }) => {
+                expect(new URL(referer).pathname).to.equal('/Mortgage_Rates/');
+                expect(new URL(href).pathname).to.equal('/mortgage-rates/');
             }
         }
     },
@@ -100,10 +100,10 @@ const URLS = [
     'https://www.zillow.com/mortgage-calculator/debt-to-income-calculator/',
     {
         url: 'https://www.zillow.com/mortgage-calculator/payment/',
-        'CrawledPageWasRedirected.js': {
-            validator: results => {
-                expect(results.status).to.equal(200);
-                expect(new URL(results.href).pathname).to.equal('/mortgage-calculator/');
+        'NoRedirectCheck.js': {
+            validator: ({ referer, href }) => {
+                expect(new URL(referer).pathname).to.equal('/mortgage-calculator/payment/');
+                expect(new URL(href).pathname).to.equal('/mortgage-calculator/');
             }
         }
     },

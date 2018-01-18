@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-expressions */
-
 const cheerio = require('cheerio');
 const expect = require('chai').expect;
 const { getTitle } = require('./helpers');
@@ -17,6 +15,7 @@ module.exports = {
         };
     },
     validator: ({ clientTitle, serverTitle }) => {
+        // eslint-disable-next-line no-unused-expressions
         expect(clientTitle, 'all pages should have a title').to.not.be.empty;
 
         if (serverTitle) {
