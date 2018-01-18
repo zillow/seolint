@@ -16,7 +16,7 @@ module.exports = {
     },
     validator: ({ clientDescription, serverDescription }) => {
         // eslint-disable-next-line no-unused-expressions
-        expect(clientDescription, 'all pages should have a meta description').to.not.be.empty;
+        expect(clientDescription, 'all pages should have a meta description').to.not.be.null;
 
         if (serverDescription) {
             expect(serverDescription, 'client and server descriptions should match').to.equal(clientDescription);
