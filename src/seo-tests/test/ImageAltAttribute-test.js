@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
-const { parser, validator } = require('../ImageAltAttributeCheck');
+const { parser, validator } = require('../ImageAltAttribute');
 
-describe('ImageAltAttributeCheck.js', () => {
+describe('ImageAltAttribute.js', () => {
     describe('parser', () => {
         it('no images', () => {
             const parsed = parser({

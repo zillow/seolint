@@ -22,7 +22,7 @@ const URLS = [
     // Legacy mortgage rates
     {
         url: 'https://www.zillow.com/30_Year_Fixed_Mortgage_Rates/',
-        'NoRedirectCheck.js': {
+        'NoRedirect.js': {
             validator: ({ referer, href }) => {
                 expect(new URL(referer).pathname).to.equal('/30_Year_Fixed_Mortgage_Rates/');
                 expect(new URL(href).pathname).to.equal('/mortgage-rates/30-year-fixed/');
@@ -31,7 +31,7 @@ const URLS = [
     },
     {
         url: 'https://www.zillow.com/20_Year_Fixed_Mortgage_Rates/',
-        'NoRedirectCheck.js': {
+        'NoRedirect.js': {
             validator: ({ referer, href }) => {
                 expect(new URL(referer).pathname).to.equal('/20_Year_Fixed_Mortgage_Rates/');
                 expect(new URL(href).pathname).to.equal('/mortgage-rates/20-year-fixed/');
@@ -40,7 +40,7 @@ const URLS = [
     },
     {
         url: 'https://www.zillow.com/15_Year_Fixed_Mortgage_Rates/',
-        'NoRedirectCheck.js': {
+        'NoRedirect.js': {
             validator: ({ referer, href }) => {
                 expect(new URL(referer).pathname).to.equal('/15_Year_Fixed_Mortgage_Rates/');
                 expect(new URL(href).pathname).to.equal('/mortgage-rates/15-year-fixed/');
@@ -49,7 +49,7 @@ const URLS = [
     },
     {
         url: 'https://www.zillow.com/7-1_ARM_Mortgage_Rates/',
-        'NoRedirectCheck.js': {
+        'NoRedirect.js': {
             validator: ({ referer, href }) => {
                 expect(new URL(referer).pathname).to.equal('/7-1_ARM_Mortgage_Rates/');
                 expect(new URL(href).pathname).to.equal('/mortgage-rates/7-1-arm/');
@@ -58,7 +58,7 @@ const URLS = [
     },
     {
         url: 'https://www.zillow.com/5-1_ARM_Mortgage_Rates/',
-        'NoRedirectCheck.js': {
+        'NoRedirect.js': {
             validator: ({ referer, href }) => {
                 expect(new URL(referer).pathname).to.equal('/5-1_ARM_Mortgage_Rates/');
                 expect(new URL(href).pathname).to.equal('/mortgage-rates/5-1-arm/');
@@ -67,7 +67,7 @@ const URLS = [
     },
     {
         url: 'https://www.zillow.com/Washington_Mortgage_Rates/',
-        'NoRedirectCheck.js': {
+        'NoRedirect.js': {
             validator: ({ referer, href }) => {
                 expect(new URL(referer).pathname).to.equal('/Washington_Mortgage_Rates/');
                 expect(new URL(href).pathname).to.equal('/mortgage-rates/wa/');
@@ -76,7 +76,7 @@ const URLS = [
     },
     {
         url: 'https://www.zillow.com/Mortgage_Rates/',
-        'NoRedirectCheck.js': {
+        'NoRedirect.js': {
             validator: ({ referer, href }) => {
                 expect(new URL(referer).pathname).to.equal('/Mortgage_Rates/');
                 expect(new URL(href).pathname).to.equal('/mortgage-rates/');
@@ -87,7 +87,7 @@ const URLS = [
     'https://www.zillow.com/mortgage-calculator/',
     {
         url: 'https://www.zillow.com/mortgage-calculator/house-affordability/',
-        'TitleTagCheck.js': {
+        'TitleTag.js': {
             validator: ({ clientTitle, serverTitle }) => {
                 // ZM-15463: Exception for for this route for this title only. If we change the title, we should shorten it as well.
                 expect(serverTitle).to.equal('How Much House Can I Afford - Home Affordability Calculator | Zillow');
@@ -100,7 +100,7 @@ const URLS = [
     'https://www.zillow.com/mortgage-calculator/debt-to-income-calculator/',
     {
         url: 'https://www.zillow.com/mortgage-calculator/payment/',
-        'NoRedirectCheck.js': {
+        'NoRedirect.js': {
             validator: ({ referer, href }) => {
                 expect(new URL(referer).pathname).to.equal('/mortgage-calculator/payment/');
                 expect(new URL(href).pathname).to.equal('/mortgage-calculator/');

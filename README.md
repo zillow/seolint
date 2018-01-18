@@ -38,23 +38,23 @@ seolint --help
 
 Below are the tests run for every url you give to SEOLint. These are general recommendations that you may want to [override with custom behavior](https://github.com/zillow/seolint#test-customization).
 
-#### H1TagCheck.js
+#### H1Tag.js
 
 Verifies that the page has one and only one `<h1>` tag.
 
-#### TitleTagCheck.js
+#### TitleTag.js
 
 Verifies that the page has a `<title>` tag with an appropriate length (no more than 60 characters).
 
 * https://moz.com/learn/seo/title-tag
 
-#### MetaDescriptionCheck.js
+#### MetaDescription.js
 
 Verifies that the page has a `<meta name="description" content="" />` tag with an appropriate length (between 50-300 characters).
 
 * https://moz.com/learn/seo/meta-description
 
-#### ImageAltAttributeCheck.js
+#### ImageAltAttribute.js
 
 Verifies that all `<img>` tags have an alt text attribute.
 Decorative images that don't add information to the content of the page should have an empty alt attribute (`alt=""`) so they can be ignored by screen readers.
@@ -62,7 +62,7 @@ Decorative images that don't add information to the content of the page should h
 * https://moz.com/learn/seo/alt-text
 * https://www.w3.org/WAI/tutorials/images/decorative/
 
-#### NoRedirectCheck.js
+#### NoRedirect.js
 
 Verifies that the page was not redirected. You can customize the validator to alternatively verify that the page _was_ redirected.
 
@@ -95,7 +95,7 @@ module.exports = {
             url: 'https://www.zillow.com/mortgage-rates/',
 
             // {object} custom test configuration
-            'TitleTagCheck.js': {
+            'TitleTag.js': {
 
                 // {function} override the default parser
                 parser: (url, clientPage, serverPage) => ({ myClientTitle: 'foo', myServerTitle: 'foo' }),
@@ -170,35 +170,35 @@ You can override the parser, the validator, or both, but be mindful when changin
 
 Below you will find the default return values for all the SEO tests.
 
-#### H1TagCheck.js
+#### H1Tag.js
 
 ##### `parser => { clientH1s, serverH1s }`
 
 * `clientH1s` (`array`): Array of h1 text strings found on the client rendering
 * `serverH1s` (`array`): Array of h1 text strings found on the server rendering
 
-#### TitleTagCheck.js
+#### TitleTag.js
 
 ##### `parser => { clientTitle, serverTitle }`
 
 * `clientTitle` (`string`): The client rendered title text
 * `serverTitle` (`string`): The server rendered title text
 
-#### MetaDescriptionCheck.js
+#### MetaDescription.js
 
 ##### `parser => { clientDescription, serverDescription }`
 
 * `clientDescription` (`string`): The client rendered description content
 * `serverDescription` (`string`): The server rendered description content
 
-#### ImageAltAttributeCheck.js
+#### ImageAltAttribute.js
 
 ##### `parser => { clientImageAltAttributes, serverImageAltAttributes }`
 
 * `clientImageAltAttributes` (`array`): Array of client rendered image alt text attributes. A `null` value in the array means an image exists without an alt attribute defined.
 * `serverImageAltAttributes` (`array`): Array of server rendered image alt text attributes. A `null` value in the array means an image exists without an alt attribute defined.
 
-#### NoRedirectCheck.js
+#### NoRedirect.js
 
 ##### `parser => { referer, href }`
 
