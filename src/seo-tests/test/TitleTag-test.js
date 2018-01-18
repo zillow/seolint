@@ -67,10 +67,17 @@ describe('TitleTag.js', () => {
             });
             expect(validatorFn).to.throw();
         });
-        it('fails if no title exists at all', () => {
+        it('fails if title is empty', () => {
             const validatorFn = validator.bind(null, {
                 clientTitle: '',
                 serverTitle: ''
+            });
+            expect(validatorFn).to.throw();
+        });
+        it('fails if no title exists at all', () => {
+            const validatorFn = validator.bind(null, {
+                clientTitle: null,
+                serverTitle: null
             });
             expect(validatorFn).to.throw();
         });

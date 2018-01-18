@@ -16,6 +16,8 @@ module.exports = {
     },
     validator: ({ clientTitle, serverTitle }) => {
         // eslint-disable-next-line no-unused-expressions
+        expect(clientTitle, 'all pages should have a title').to.not.be.null;
+        // eslint-disable-next-line no-unused-expressions
         expect(clientTitle, 'all pages should have a title').to.not.be.empty;
 
         if (serverTitle) {
