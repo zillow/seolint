@@ -66,6 +66,12 @@ Decorative images that don't add information to the content of the page should h
 
 Verifies that the page was not redirected. You can customize the validator to alternatively verify that the page _was_ redirected.
 
+#### MixedContent.js
+
+Verifies that the page has no mixed-content resources.
+
+* https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content
+
 ## Server-side vs Client-side Rendering
 
 In the past, server-side rendering was considered mandatory for search engines to be able to crawl your website.
@@ -204,3 +210,10 @@ Below you will find the default return values for all the SEO tests.
 
 * `referer` (`string`): The URL of the referring page that initiated the redirect.
 * `href` (`string`): The URL of the resulting page after the redirect.
+
+#### MixedContent.js
+
+##### `parser => { isSecure, insecureResources }`
+
+* `isSecure` (`boolean`): Is the requested URL a secure page.
+* `insecureResources` (`array`): An array of insecure URLs requested by the page.
