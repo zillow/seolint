@@ -119,6 +119,9 @@ module.exports = {
             // {object} custom test configuration
             'TitleTag.js': {
 
+                // {object} test specific options
+                options: {},
+
                 // {function} override the default parser
                 parser: (url, clientPage, serverPage) => ({ myClientTitle: 'foo', myServerTitle: 'foo' }),
 
@@ -144,7 +147,7 @@ the result of which is passed to the validator.
 
 Client rendering is done with [PhantomJs](https://github.com/amir20/phantomjs-node) and server rendering is done with [request](https://github.com/request/request).
 
-### `parser(data)`
+### `parser(data, options)`
 
 Below is the structure of parser `data`:
 
@@ -181,7 +184,7 @@ Below is the structure of parser `data`:
 }
 ```
 
-### `validator()`
+### `validator(parsed, options)`
 
 Validators are simple functions that take the output of the parser function as input. If the validator runs without throwing an error, the test is successful. If you want the validator to fail, just throw an error. The default validators use the [chai assertion library](http://chaijs.com/api/bdd/) for validating the parsed page data.
 
@@ -243,9 +246,14 @@ Below you will find the default return values for all the SEO tests.
 
 #### Canonical.js
 
+##### `options`
+
+* `expectedPath` (`string`): By default, the test verifies that the canonical matches the page url.
+Set this to specify a different expected canonical path.
+
 ##### `parser => { url, clientCanonicalsHead, clientCanonicalsBody, serverCanonicalsHead, serverCanonicalsBody }`
 
-* `url` (`string`): The page URL.
+* `url` (`string`): The url of final page (after any redirects).
 * `clientCanonicalsHead` (`array`): An array of canonical links in the head of the client.
 * `clientCanonicalsBody` (`array`): An array of canonical links in the body of the client.
 * `serverCanonicalsHead` (`array`): An array of canonical links in the head of the server.

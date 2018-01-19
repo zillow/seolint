@@ -5,12 +5,16 @@ describe('Canonical.js', () => {
     describe('parser', () => {
         it('parses body canonicals', () => {
             const parsed = parser({
-                url: 'https://www.example.com/',
                 client: {
                     content: '<html><head></head><body><link rel="canonical" href="client" /></body></html>'
                 },
                 server: {
-                    content: '<html><head></head><body><link rel="canonical" href="server" /></body></html>'
+                    content: '<html><head></head><body><link rel="canonical" href="server" /></body></html>',
+                    response: {
+                        request: {
+                            href: 'https://www.example.com/'
+                        }
+                    }
                 }
             });
             expect(parsed).to.eql({
@@ -29,7 +33,12 @@ describe('Canonical.js', () => {
                     content: '<html><head><link rel="canonical" href="client" /></head><body></body></html>'
                 },
                 server: {
-                    content: '<html><head><link rel="canonical" href="server" /></head><body></body></html>'
+                    content: '<html><head><link rel="canonical" href="server" /></head><body></body></html>',
+                    response: {
+                        request: {
+                            href: 'https://www.example.com/'
+                        }
+                    }
                 }
             });
             expect(parsed).to.eql({
@@ -48,11 +57,40 @@ describe('Canonical.js', () => {
                     content: '<html><head></head><body></body></html>'
                 },
                 server: {
-                    content: '<html><head></head><body></body></html>'
+                    content: '<html><head></head><body></body></html>',
+                    response: {
+                        request: {
+                            href: 'https://www.example.com/'
+                        }
+                    }
                 }
             });
             expect(parsed).to.eql({
                 url: 'https://www.example.com/',
+                clientCanonicalsHead: [],
+                clientCanonicalsBody: [],
+                serverCanonicalsHead: [],
+                serverCanonicalsBody: []
+            });
+        });
+
+        it('url was redirected', () => {
+            const parsed = parser({
+                url: 'https://www.example.com/',
+                client: {
+                    content: '<html><head></head><body></body></html>'
+                },
+                server: {
+                    content: '<html><head></head><body></body></html>',
+                    response: {
+                        request: {
+                            href: 'https://example.com'
+                        }
+                    }
+                }
+            });
+            expect(parsed).to.eql({
+                url: 'https://example.com',
                 clientCanonicalsHead: [],
                 clientCanonicalsBody: [],
                 serverCanonicalsHead: [],
@@ -181,6 +219,40 @@ describe('Canonical.js', () => {
                 serverCanonicalsBody: []
             });
             expect(validatorFn).to.not.throw();
+        });
+
+        it('succeeds with an optional expectedPath', () => {
+            const validatorFn = validator.bind(
+                null,
+                {
+                    url: 'https://www.example.com/foo/bar/',
+                    clientCanonicalsHead: ['https://www.example.com/foo-bar/'],
+                    clientCanonicalsBody: [],
+                    serverCanonicalsHead: [],
+                    serverCanonicalsBody: []
+                },
+                {
+                    expectedPath: '/foo-bar/'
+                }
+            );
+            expect(validatorFn).to.not.throw();
+        });
+
+        it('fails with an optional expectedPath', () => {
+            const validatorFn = validator.bind(
+                null,
+                {
+                    url: 'https://www.example.com/foo/bar/',
+                    clientCanonicalsHead: ['https://www.example.com/foo/bar/'],
+                    clientCanonicalsBody: [],
+                    serverCanonicalsHead: [],
+                    serverCanonicalsBody: []
+                },
+                {
+                    expectedPath: '/foo-bar/'
+                }
+            );
+            expect(validatorFn).to.throw('unexpected canonical: "https://www.example.com/foo/bar/"');
         });
     });
 });

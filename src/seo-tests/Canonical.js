@@ -1,24 +1,27 @@
 const cheerio = require('cheerio');
 const expect = require('chai').expect;
 const { getCanonicals } = require('./helpers');
-const { isValidURL } = require('../js/urlHelpers');
+const { isValidURL, resolveURL } = require('../js/urlHelpers');
 
 module.exports = {
     description: 'Verifies that the page has a proper canonical link.',
     resources: ['https://webmasters.googleblog.com/2013/04/5-common-mistakes-with-relcanonical.html'],
-    parser: ({ url, client, server }) => {
+    parser: ({ client, server }) => {
         const $client = cheerio.load(client.content);
         const $server = cheerio.load(server.content);
 
         return {
-            url,
+            url: server.response.request.href,
             clientCanonicalsHead: getCanonicals($client, 'head'),
             clientCanonicalsBody: getCanonicals($client, 'body'),
             serverCanonicalsHead: getCanonicals($server, 'head'),
             serverCanonicalsBody: getCanonicals($server, 'body')
         };
     },
-    validator: ({ url, clientCanonicalsHead, clientCanonicalsBody, serverCanonicalsHead, serverCanonicalsBody }) => {
+    validator: (
+        { url, clientCanonicalsHead, clientCanonicalsBody, serverCanonicalsHead, serverCanonicalsBody },
+        options = {}
+    ) => {
         // Make sure there are no canonicals in the body
         expect(
             clientCanonicalsBody,
@@ -43,6 +46,10 @@ module.exports = {
         const canonical = clientCanonicalsHead[0];
         expect(isValidURL(canonical), `"${canonical}" is not a fully resolved url`).to.equal(true);
 
-        expect(canonical, `unexpected canonical: "${canonical}"`).to.equal(url);
+        let expected = url;
+        if (options.expectedPath) {
+            expected = resolveURL(options.expectedPath, url);
+        }
+        expect(canonical, `unexpected canonical: "${canonical}"`).to.equal(expected);
     }
 };
