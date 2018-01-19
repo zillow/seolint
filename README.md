@@ -82,6 +82,12 @@ Note: Inconsistent trailing slashes are not necessarily a bad thing on their own
 you just have to make sure that your redirects are set up correctly and you are linking to the correct version.
 Ultimately we want to prevent duplicate content and unnecessary redirects.
 
+#### Canonical.js
+
+Verifies that the page has one canonical link with a fully resolved url.
+
+* https://webmasters.googleblog.com/2013/04/5-common-mistakes-with-relcanonical.html
+
 ## Server-side vs Client-side Rendering
 
 In the past, server-side rendering was considered mandatory for search engines to be able to crawl your website.
@@ -234,3 +240,13 @@ Below you will find the default return values for all the SEO tests.
 
 * `hrefsWithoutSlash` (`array`): An array of all hrefs from the same domain that do not have a trailing slash.
 * `href` (`array`): An array of all hrefs found on the page.
+
+#### Canonical.js
+
+##### `parser => { url, clientCanonicalsHead, clientCanonicalsBody, serverCanonicalsHead, serverCanonicalsBody }`
+
+* `url` (`string`): The page URL.
+* `clientCanonicalsHead` (`array`): An array of canonical links in the head of the client.
+* `clientCanonicalsBody` (`array`): An array of canonical links in the body of the client.
+* `serverCanonicalsHead` (`array`): An array of canonical links in the head of the server.
+* `serverCanonicalsBody` (`array`): An array of canonical links in the body of the server.
