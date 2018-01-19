@@ -2,7 +2,7 @@ const cheerio = require('cheerio');
 const expect = require('chai').expect;
 const { getH1s, getTitle, getDescription, getImageAltAttributes, getHrefs, getCanonicals } = require('.');
 
-describe('seo-tests helpers', () => {
+describe('rule helpers', () => {
     describe('getH1s', () => {
         it('multiple h1s', () => {
             const $ = cheerio.load('<html><body><h1>Foo</h1><h1>Bar</h1></body></html>');

@@ -34,9 +34,9 @@ To see the full usage information:
 seolint --help
 ```
 
-## SEO Tests
+## SEO Rules
 
-Below are the tests run for every url you give to SEOLint. These are general recommendations that you may want to [override with custom behavior](https://github.com/zillow/seolint#test-customization).
+Below are the rules run for every url you give to SEOLint. These are general recommendations that you may want to [override with custom behavior](https://github.com/zillow/seolint#rule-customization).
 
 #### H1Tag.js
 
@@ -116,10 +116,10 @@ module.exports = {
             // {string} url
             url: 'https://www.zillow.com/mortgage-rates/',
 
-            // {object} custom test configuration
+            // {object} custom rule configuration
             'TitleTag.js': {
 
-                // {object} test specific options
+                // {object} rule specific options
                 options: {},
 
                 // {function} override the default parser
@@ -138,10 +138,10 @@ module.exports = {
 
 Note: If you are using a JavaScript configuration file that has third-party module dependencies (e.g. chai), make sure to install those dependencies at the location of your config file, otherwise seolint will fail. It's a good idea to `npm i --save-dev` those dependencies if your seolint config file lives alongside your `package.json`.
 
-## Test Customization
+## Rule Customization
 
-In some cases, you will want to override the default behavior of tests in your configuration file.
-Each test consists of a parser and a validator function.
+In some cases, you will want to override the default behavior of rules in your configuration file.
+Each rule consists of a parser and a validator function.
 After SEOLint renders your page, it passes all the render data to the parser function,
 the result of which is passed to the validator.
 
@@ -188,12 +188,12 @@ Below is the structure of parser `data`:
 
 Validators are simple functions that take the output of the parser function as input. If the validator runs without throwing an error, the test is successful. If you want the validator to fail, just throw an error. The default validators use the [chai assertion library](http://chaijs.com/api/bdd/) for validating the parsed page data.
 
-### SEO Test Defaults
+### SEO Rule Defaults
 
-SEO tests were broken up into separate parsers and validators so that you can tweak validation conditions without having to re-parse the render data.
+SEO rules were broken up into separate parsers and validators so that you can tweak validation conditions without having to re-parse the render data.
 You can override the parser, the validator, or both, but be mindful when changing the parser as it will also change the input to the validator.
 
-Below you will find the default return values for all the SEO tests.
+Below you will find the default return values for all the SEO rules.
 
 #### H1Tag.js
 
@@ -248,7 +248,7 @@ Below you will find the default return values for all the SEO tests.
 
 ##### `options`
 
-* `expectedPath` (`string`): By default, the test verifies that the canonical matches the page url.
+* `expectedPath` (`string`): By default, the rule verifies that the canonical matches the page url.
 Set this to specify a different expected canonical path.
 
 ##### `parser => { url, clientCanonicalsHead, clientCanonicalsBody, serverCanonicalsHead, serverCanonicalsBody }`
