@@ -18,10 +18,10 @@ module.exports = {
         expect(clientH1s, 'all pages should have an H1').to.not.be.empty;
 
         if (clientH1s.length) {
-            expect(clientH1s, 'client page has only one h1').to.have.lengthOf(1);
+            expect(clientH1s, `client page has more than one h1:\n"${clientH1s.join('"\n"')}"\n`).to.have.lengthOf(1);
         }
         if (serverH1s.length) {
-            expect(serverH1s, 'server page has only one h1').to.have.lengthOf(1);
+            expect(serverH1s, `server page has more than one h1:\n"${serverH1s.join('"\n"')}"\n`).to.have.lengthOf(1);
         }
 
         if (clientH1s.length && serverH1s.length) {
