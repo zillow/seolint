@@ -8,10 +8,10 @@
   },
   "scripts": {
     "test": "npm run eslint && npm run mocha",
-    "mocha": "mocha 'src/**/*-test.js'",
-    "mocha-debug": "mocha --inspect-brk 'src/**/*-test.js'",
-    "eslint": "eslint 'src/**/*.js'",
-    "prettier": "prettier --single-quote --print-width 120 --tab-width 4 --write 'src/**/*.js'",
+    "mocha": "mocha 'src/**/*-test.js' 'examples/**/*-test.js'",
+    "mocha-debug": "mocha --inspect-brk 'src/**/*-test.js' 'examples/**/*-test.js'",
+    "eslint": "eslint 'src/**/*.js' 'examples/**/*.js'",
+    "prettier": "prettier --single-quote --print-width 120 --tab-width 4 --write 'src/**/*.js' 'examples/**/*.js'",
     "prettier-pre-commit": "lib/prettier-pre-commit"
   },
   "pre-commit": [

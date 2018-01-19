@@ -104,6 +104,7 @@ SEOLint supports JavaScript and JSON configuration files - you can see an exampl
 
 ```javascript
 const expect = require('chai').expect;
+const path = require('path');
 
 module.exports = {
     // {array} url configurations
@@ -132,7 +133,10 @@ module.exports = {
     ],
 
     // {string} force all urls to use this hostname
-    hostname: 'https://www.zillow.com/'
+    hostname: 'https://www.zillow.com/',
+
+    // {string} directory of custom rules to include
+    rulesdir: path.join(__dirname, 'path/to/my/rules')
 }
 ```
 
@@ -258,3 +262,12 @@ Set this to specify a different expected canonical path.
 * `clientCanonicalsBody` (`array`): An array of canonical links in the body of the client.
 * `serverCanonicalsHead` (`array`): An array of canonical links in the head of the server.
 * `serverCanonicalsBody` (`array`): An array of canonical links in the body of the server.
+
+## Custom Rules
+
+You can write your own rules and include them when running tests.
+Custom rules follow the same format as the default rules with a `parser` and `validator` function (see the [default rules](https://github.com/zillow/seolint/tree/master/src/rules) or [examples](https://github.com/zillow/seolint/tree/master/examples/rules) for inspiration). To include your rules, specify `rulesdir` in your [configuration file](https://github.com/zillow/seolint#seolintconfigjs) or `--rulesdir` on the command line:
+
+```bash
+seolint --rulesdir path/to/my/rules https://www.zillow.com/
+```
