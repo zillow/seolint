@@ -86,6 +86,9 @@ describe('commandLine', () => {
             // Turn urls into simple list of strings for easy comparison
             config.urls = config.urls.map(url => (typeof url === 'string' ? url : url.url));
 
+            // Strip working directory from rulesdir
+            config.rulesdir = config.rulesdir.replace(process.cwd(), '');
+
             expect(config).to.eql({
                 ...DEFAULT_CONFIG,
                 ...MORTGAGE_CONFIG
@@ -123,6 +126,16 @@ describe('commandLine', () => {
                 ...DEFAULT_CONFIG,
                 ...MLC_CONFIG,
                 hostname: 'https://www.example.com/'
+            });
+        });
+
+        it('--rulesdir', () => {
+            const argv = ['node', 'index.js', 'https://www.zillow.com/', '--rulesdir', './my-rules'];
+            const config = parse(argv);
+            expect(config).to.eql({
+                ...DEFAULT_CONFIG,
+                urls: ['https://www.zillow.com/'],
+                rulesdir: './my-rules'
             });
         });
     });

@@ -1,5 +1,6 @@
 {
     "hostname": "https://www.mm1.zillow.net/",
+    "rulesdir": "/examples/rules",
     "urls": [
         "https://www.zillow.com/mortgage-rates/",
         "https://www.zillow.com/refinance/",

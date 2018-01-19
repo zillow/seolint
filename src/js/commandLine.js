@@ -8,6 +8,11 @@ const CLI_OPTIONS = {
         requiresArg: true,
         type: 'string'
     },
+    rulesdir: {
+        description: 'Use additional rules from this directory',
+        requiresArg: true,
+        type: 'string'
+    },
     hostname: {
         description: 'URLs are run with the specified hostname (e.g. https://localhost:8443/)',
         type: 'string'

@@ -1,5 +1,6 @@
 const { URL } = require('url');
 const { expect } = require('chai');
+const path = require('path');
 
 const URLS = [
     // Mortgage rates
@@ -208,5 +209,6 @@ const URLS = [
 
 module.exports = {
     hostname: 'https://www.mm1.zillow.net/',
+    rulesdir: path.join(__dirname, 'rules'),
     urls: URLS
 };
