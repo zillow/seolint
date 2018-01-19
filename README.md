@@ -82,6 +82,12 @@ Note: Inconsistent trailing slashes are not necessarily a bad thing on their own
 you just have to make sure that your redirects are set up correctly and you are linking to the correct version.
 Ultimately we want to prevent duplicate content and unnecessary redirects.
 
+#### Canonical.js
+
+Verifies that the page has one canonical link with a fully resolved url.
+
+* https://webmasters.googleblog.com/2013/04/5-common-mistakes-with-relcanonical.html
+
 ## Server-side vs Client-side Rendering
 
 In the past, server-side rendering was considered mandatory for search engines to be able to crawl your website.
@@ -113,6 +119,9 @@ module.exports = {
             // {object} custom test configuration
             'TitleTag.js': {
 
+                // {object} test specific options
+                options: {},
+
                 // {function} override the default parser
                 parser: (url, clientPage, serverPage) => ({ myClientTitle: 'foo', myServerTitle: 'foo' }),
 
@@ -138,7 +147,7 @@ the result of which is passed to the validator.
 
 Client rendering is done with [PhantomJs](https://github.com/amir20/phantomjs-node) and server rendering is done with [request](https://github.com/request/request).
 
-### `parser(data)`
+### `parser(data, options)`
 
 Below is the structure of parser `data`:
 
@@ -175,7 +184,7 @@ Below is the structure of parser `data`:
 }
 ```
 
-### `validator()`
+### `validator(parsed, options)`
 
 Validators are simple functions that take the output of the parser function as input. If the validator runs without throwing an error, the test is successful. If you want the validator to fail, just throw an error. The default validators use the [chai assertion library](http://chaijs.com/api/bdd/) for validating the parsed page data.
 
@@ -234,3 +243,18 @@ Below you will find the default return values for all the SEO tests.
 
 * `hrefsWithoutSlash` (`array`): An array of all hrefs from the same domain that do not have a trailing slash.
 * `href` (`array`): An array of all hrefs found on the page.
+
+#### Canonical.js
+
+##### `options`
+
+* `expectedPath` (`string`): By default, the test verifies that the canonical matches the page url.
+Set this to specify a different expected canonical path.
+
+##### `parser => { url, clientCanonicalsHead, clientCanonicalsBody, serverCanonicalsHead, serverCanonicalsBody }`
+
+* `url` (`string`): The url of final page (after any redirects).
+* `clientCanonicalsHead` (`array`): An array of canonical links in the head of the client.
+* `clientCanonicalsBody` (`array`): An array of canonical links in the body of the client.
+* `serverCanonicalsHead` (`array`): An array of canonical links in the head of the server.
+* `serverCanonicalsBody` (`array`): An array of canonical links in the body of the server.

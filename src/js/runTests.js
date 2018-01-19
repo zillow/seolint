@@ -62,11 +62,11 @@ module.exports = (pages, routeConfig) => {
             }
 
             // Parse the pages for validation data
-            const parsed = parserFn({ url, client, server });
+            const parsed = parserFn({ url, client, server }, testConfig.options);
 
             let success = true;
             try {
-                validatorFn(parsed);
+                validatorFn(parsed, testConfig.options);
             } catch (e) {
                 failCount += 1;
                 success = false;

@@ -1,12 +1,6 @@
 const { URL } = require('url');
 const { expect } = require('chai');
 
-const canonicalValidator = canonical => ({
-    validator: results => {
-        expect(new URL(results.Canonical).pathname).to.equal(canonical);
-    }
-});
-
 const URLS = [
     // Mortgage rates
     'https://www.zillow.com/mortgage-rates/',
@@ -110,35 +104,67 @@ const URLS = [
     // Legacy Long form
     {
         url: 'https://www.zillow.com/pre-approval/',
-        'CanonicalLinkMatchesUrl.js': canonicalValidator('/home-loans/pre-approval/')
+        'Canonical.js': {
+            options: {
+                expectedPath: '/home-loans/pre-approval/'
+            }
+        }
     },
     {
         url: 'https://www.zillow.com/home-loans/#/pre-approval',
-        'CanonicalLinkMatchesUrl.js': canonicalValidator('/home-loans/pre-approval/')
+        'Canonical.js': {
+            options: {
+                expectedPath: '/home-loans/pre-approval/'
+            }
+        }
     },
     {
         url: 'https://www.zillow.com/pre-qualify/',
-        'CanonicalLinkMatchesUrl.js': canonicalValidator('/home-loans/pre-qualify/')
+        'Canonical.js': {
+            options: {
+                expectedPath: '/home-loans/pre-qualify/'
+            }
+        }
     },
     {
         url: 'https://www.zillow.com/home-loans/#/pre-qualify',
-        'CanonicalLinkMatchesUrl.js': canonicalValidator('/home-loans/pre-qualify/')
+        'Canonical.js': {
+            options: {
+                expectedPath: '/home-loans/pre-qualify/'
+            }
+        }
     },
     {
         url: 'https://www.zillow.com/home-loans/#/landing',
-        'CanonicalLinkMatchesUrl.js': canonicalValidator('/home-loans/')
+        'Canonical.js': {
+            options: {
+                expectedPath: '/home-loans/'
+            }
+        }
     },
     {
         url: 'https://www.zillow.com/home-loans/#/purchase',
-        'CanonicalLinkMatchesUrl.js': canonicalValidator('/home-loans/purchase/')
+        'Canonical.js': {
+            options: {
+                expectedPath: '/home-loans/purchase/'
+            }
+        }
     },
     {
         url: 'https://www.zillow.com/home-loans/#/refinance',
-        'CanonicalLinkMatchesUrl.js': canonicalValidator('/home-loans/refinance/')
+        'Canonical.js': {
+            options: {
+                expectedPath: '/home-loans/refinance/'
+            }
+        }
     },
     {
         url: 'https://www.zillow.com/home-loans/#/va',
-        'CanonicalLinkMatchesUrl.js': canonicalValidator('/home-loans/va/')
+        'Canonical.js': {
+            options: {
+                expectedPath: '/home-loans/va/'
+            }
+        }
     },
     // Long form
     'https://www.zillow.com/home-loans/',
@@ -156,15 +182,27 @@ const URLS = [
     'https://www.zillow.com/mortgage/browse/',
     {
         url: 'https://www.zillow.com/mortgage/browse/?ratesType=rates&stateAbbr=al',
-        'CanonicalLinkMatchesUrl.js': canonicalValidator('/mortgage/browse/')
+        'Canonical.js': {
+            options: {
+                expectedPath: '/mortgage/browse/'
+            }
+        }
     },
     {
         url: 'https://www.zillow.com/mortgage/browse/?ratesType=refinance&stateAbbr=al',
-        'CanonicalLinkMatchesUrl.js': canonicalValidator('/mortgage/browse/')
+        'Canonical.js': {
+            options: {
+                expectedPath: '/mortgage/browse/'
+            }
+        }
     },
     {
         url: 'https://www.zillow.com/mortgage/browse/?ratesType=lenders&stateAbbr=al',
-        'CanonicalLinkMatchesUrl.js': canonicalValidator('/mortgage/browse/')
+        'Canonical.js': {
+            options: {
+                expectedPath: '/mortgage/browse/'
+            }
+        }
     }
 ];
 

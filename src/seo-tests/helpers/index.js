@@ -39,6 +39,30 @@ module.exports = {
 
     /**
      * @param $ Cheerio instance
+     * @param selector {string} Limit the search to the given selector
+     * @return {string}
+     */
+    getCanonicals: ($, selector) => {
+        let nodes;
+        if (selector) {
+            nodes = $(selector).find('link[rel="canonical"]');
+        } else {
+            nodes = $('link[rel="canonical"]');
+        }
+        return nodes
+            .map(function() {
+                const href = $(this).attr('href');
+                if (typeof href === 'undefined') {
+                    return -1;
+                }
+                return href;
+            })
+            .get()
+            .map(v => (v === -1 ? null : v));
+    },
+
+    /**
+     * @param $ Cheerio instance
      * @return {string[]}
      */
     getImageAltAttributes: $ => {

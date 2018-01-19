@@ -1,6 +1,6 @@
 const cheerio = require('cheerio');
 const expect = require('chai').expect;
-const { getH1s, getTitle, getDescription, getImageAltAttributes, getHrefs } = require('.');
+const { getH1s, getTitle, getDescription, getImageAltAttributes, getHrefs, getCanonicals } = require('.');
 
 describe('seo-tests helpers', () => {
     describe('getH1s', () => {
@@ -123,6 +123,33 @@ describe('seo-tests helpers', () => {
         it('has an empty href', () => {
             const $ = cheerio.load('<html><head></head><body><a href="">#anchor</a></body></html>');
             expect(getHrefs($)).to.eql(['']);
+        });
+    });
+
+    describe('getCanonicals', () => {
+        it('has no canonical', () => {
+            const $ = cheerio.load('<html><head></head><body></body></html>');
+            expect(getCanonicals($)).to.eql([]);
+        });
+        it('has canonical with no href', () => {
+            const $ = cheerio.load('<html><head><link rel="canonical" /></head><body></body></html>');
+            expect(getCanonicals($)).to.eql([null]);
+        });
+        it('has canonical with empty href', () => {
+            const $ = cheerio.load('<html><head><link rel="canonical" href="" /></head><body></body></html>');
+            expect(getCanonicals($)).to.eql(['']);
+        });
+        it('has multiple canonicals', () => {
+            const $ = cheerio.load(
+                '<html><head><link rel="canonical" href="foo" /></head><body><link rel="canonical" href="bar" /></body></html>'
+            );
+            expect(getCanonicals($)).to.eql(['foo', 'bar']);
+        });
+        it('limits canonicals to selector', () => {
+            const $ = cheerio.load(
+                '<html><head><link rel="canonical" href="foo" /></head><body><link rel="canonical" href="bar" /></body></html>'
+            );
+            expect(getCanonicals($, 'head')).to.eql(['foo']);
         });
     });
 });
