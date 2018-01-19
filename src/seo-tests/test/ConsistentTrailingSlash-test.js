@@ -1,5 +1,5 @@
 const expect = require('chai').expect;
-const { parser } = require('../ConsistentTrailingSlash');
+const { parser, validator } = require('../ConsistentTrailingSlash');
 
 describe('ConsistentTrailingSlash', () => {
     describe('parser', () => {
@@ -160,5 +160,21 @@ describe('ConsistentTrailingSlash', () => {
         });
     });
 
-    describe('validator', () => {});
+    describe('validator', () => {
+        it('fails for any hrefs without a trailing slash', () => {
+            const validatorFn = validator.bind(null, {
+                hrefs: ['https://www.example.com/bar'],
+                hrefsWithoutSlash: ['https://www.example.com/bar']
+            });
+            expect(validatorFn).to.throw('found links without trailing slashes');
+        });
+
+        it('succeeds if there are no hrefs with a trailing slash', () => {
+            const validatorFn = validator.bind(null, {
+                hrefs: ['https://www.example.com/bar/'],
+                hrefsWithoutSlash: []
+            });
+            expect(validatorFn).to.not.throw();
+        });
+    });
 });
