@@ -53,5 +53,18 @@ module.exports = {
             })
             .get()
             .map(v => (v === -1 ? null : v));
+    },
+
+    /**
+     * @param $ Cheerio instance
+     * @return {string[]}
+     */
+    getHrefs: $ => {
+        return $('a')
+            .map(function() {
+                return $(this).attr('href');
+            })
+            .get()
+            .filter(href => !href.startsWith('javascript:'));
     }
 };
