@@ -1,6 +1,6 @@
 {
   "name": "seolint",
-  "version": "0.10.3",
+  "version": "0.11.0",
   "description": "A node based SEO linting tool",
   "main": "index.js",
   "bin": {
