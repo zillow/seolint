@@ -1,6 +1,7 @@
 const cheerio = require('cheerio');
 const expect = require('chai').expect;
-const { getImageAltAttributes } = require('./helpers');
+const { getImages } = require('./helpers');
+const _ = require('lodash');
 
 module.exports = {
     description:
@@ -11,13 +12,20 @@ module.exports = {
         const $server = cheerio.load(server.content);
 
         return {
-            clientImageAltAttributes: getImageAltAttributes($client),
-            serverImageAltAttributes: getImageAltAttributes($server)
+            clientImages: getImages($client),
+            serverImages: getImages($server)
         };
     },
-    validator: ({ clientImageAltAttributes /* , serverImageAltAttributes */ }) => {
-        clientImageAltAttributes.forEach(altAttribute => {
-            expect(altAttribute, 'all images should have an alt text attribute').to.not.equal(null);
+    validator: ({ clientImages /* , serverImages */ }) => {
+        const failures = [];
+        _.forEach(clientImages, image => {
+            if (typeof image.alt !== 'string') {
+                failures.push(image);
+            }
         });
+
+        // eslint-disable-next-line no-unused-expressions
+        expect(failures, `found images without an alt attribute:\n${failures.map(f => f.src).join('\n')}\n`).to.be
+            .empty;
     }
 };

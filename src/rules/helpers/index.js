@@ -63,20 +63,18 @@ module.exports = {
 
     /**
      * @param $ Cheerio instance
-     * @return {string[]}
+     * @return {object[]}
      */
-    getImageAltAttributes: $ => {
+    getImages: $ => {
         return $('img')
             .map(function() {
-                const alt = $(this).attr('alt');
-                if (typeof alt === 'undefined') {
-                    // Cheerio map excludes null/undefined values
-                    return -1;
-                }
-                return alt;
+                const $this = $(this);
+                return {
+                    src: $this.attr('src'),
+                    alt: $this.attr('alt')
+                };
             })
-            .get()
-            .map(v => (v === -1 ? null : v));
+            .get();
     },
 
     /**

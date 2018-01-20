@@ -1,6 +1,6 @@
 const cheerio = require('cheerio');
 const expect = require('chai').expect;
-const { getH1s, getTitle, getDescription, getImageAltAttributes, getHrefs, getCanonicals } = require('.');
+const { getH1s, getTitle, getDescription, getImages, getHrefs, getCanonicals } = require('.');
 
 describe('rule helpers', () => {
     describe('getH1s', () => {
@@ -68,30 +68,24 @@ describe('rule helpers', () => {
         });
     });
 
-    describe('getImageAltAttributes', () => {
+    describe('getImages', () => {
         it('has multiple images', () => {
-            const $ = cheerio.load('<html><head></head><body><img alt="foo"><img alt="bar"><img></body></html>');
-            expect(getImageAltAttributes($)).to.eql(['foo', 'bar', null]);
+            const $ = cheerio.load(
+                '<html><head></head><body><img src="foo.png" alt="foo"><img src="bar.png" alt="bar"></body></html>'
+            );
+            expect(getImages($)).to.eql([{ src: 'foo.png', alt: 'foo' }, { src: 'bar.png', alt: 'bar' }]);
         });
         it('has no images', () => {
             const $ = cheerio.load('<html><head></head><body></body></html>');
-            expect(getImageAltAttributes($)).to.eql([]);
+            expect(getImages($)).to.eql([]);
         });
-        it('has one image', () => {
-            const $ = cheerio.load('<html><head></head><body><img alt="foo"></body></html>');
-            expect(getImageAltAttributes($)).to.eql(['foo']);
-        });
-        it('has image with no alt attribute', () => {
+        it('has image with no attributes', () => {
             const $ = cheerio.load('<html><head></head><body><img></body></html>');
-            expect(getImageAltAttributes($)).to.eql([null]);
+            expect(getImages($)).to.eql([{ src: undefined, alt: undefined }]);
         });
-        it('has image with empty alt attribute', () => {
-            const $ = cheerio.load('<html><head></head><body><img alt=""></body></html>');
-            expect(getImageAltAttributes($)).to.eql(['']);
-        });
-        it('has image with alt attribute "-1"', () => {
-            const $ = cheerio.load('<html><head></head><body><img alt="-1"></body></html>');
-            expect(getImageAltAttributes($)).to.eql(['-1']);
+        it('has image with empty attributes', () => {
+            const $ = cheerio.load('<html><head></head><body><img src="" alt=""></body></html>');
+            expect(getImages($)).to.eql([{ src: '', alt: '' }]);
         });
     });
 

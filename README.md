@@ -222,10 +222,10 @@ Below you will find the default return values for all the SEO rules.
 
 #### ImageAltAttribute.js
 
-##### `parser => { clientImageAltAttributes, serverImageAltAttributes }`
+##### `parser => { clientImages, serverImages }`
 
-* `clientImageAltAttributes` (`array`): Array of client rendered image alt text attributes. A `null` value in the array means an image exists without an alt attribute defined.
-* `serverImageAltAttributes` (`array`): Array of server rendered image alt text attributes. A `null` value in the array means an image exists without an alt attribute defined.
+* `clientImages` (`array`): Array of client rendered image objects including a `src` and `alt` property
+* `serverImages` (`array`): Array of server rendered image objects including a `src` and `alt` property
 
 #### NoRedirect.js
 

@@ -9,40 +9,18 @@ describe('ImageAltAttribute.js', () => {
                 server: { content: '<html><head></head><body></body></html>' }
             });
             expect(parsed).to.eql({
-                clientImageAltAttributes: [],
-                serverImageAltAttributes: []
+                clientImages: [],
+                serverImages: []
             });
         });
-        it('multiple images', () => {
+        it('different client and server images', () => {
             const parsed = parser({
-                client: {
-                    content: '<html><head></head><body><img alt="foo"><img alt=""><img alt="bar"></body></html>'
-                },
-                server: { content: '<html><head></head><body><img alt="bar"><img alt=""><img alt="foo"></body></html>' }
+                client: { content: '<html><head></head><body><img src="foo.png" alt="foo" /></body></html>' },
+                server: { content: '<html><head></head><body><img src="bar.png" alt="bar" /></body></html>' }
             });
             expect(parsed).to.eql({
-                clientImageAltAttributes: ['foo', '', 'bar'],
-                serverImageAltAttributes: ['bar', '', 'foo']
-            });
-        });
-        it('empty string alt attribute', () => {
-            const parsed = parser({
-                client: { content: '<html><head></head><body><img alt=""></body></html>' },
-                server: { content: '<html><head></head><body><img alt=""></body></html>' }
-            });
-            expect(parsed).to.eql({
-                clientImageAltAttributes: [''],
-                serverImageAltAttributes: ['']
-            });
-        });
-        it('missing alt attribute', () => {
-            const parsed = parser({
-                client: { content: '<html><head></head><body><img></body></html>' },
-                server: { content: '<html><head></head><body><img></body></html>' }
-            });
-            expect(parsed).to.eql({
-                clientImageAltAttributes: [null],
-                serverImageAltAttributes: [null]
+                clientImages: [{ src: 'foo.png', alt: 'foo' }],
+                serverImages: [{ src: 'bar.png', alt: 'bar' }]
             });
         });
     });
@@ -50,36 +28,31 @@ describe('ImageAltAttribute.js', () => {
     describe('validator', () => {
         it('fails for missing alt attribute', () => {
             const validatorFn = validator.bind(null, {
-                clientImageAltAttributes: [null],
-                serverImageAltAttributes: [null]
+                clientImages: [{ src: 'foo.png' }]
             });
-            expect(validatorFn).to.throw();
+            expect(validatorFn).to.throw('found images without an alt attribute:\nfoo.png');
         });
         it('succeeds for empty string alt attribute', () => {
             const validatorFn = validator.bind(null, {
-                clientImageAltAttributes: [''],
-                serverImageAltAttributes: ['']
+                clientImages: [{ src: 'foo.png', alt: '' }]
             });
             expect(validatorFn).to.not.throw();
         });
         it('succeeds for multiple images', () => {
             const validatorFn = validator.bind(null, {
-                clientImageAltAttributes: ['foo', 'bar'],
-                serverImageAltAttributes: ['foo', 'bar']
+                clientImages: [{ src: 'foo.png', alt: 'foo' }, { src: 'bar.png', alt: 'bar' }]
             });
             expect(validatorFn).to.not.throw();
         });
         it('fails on last image', () => {
             const validatorFn = validator.bind(null, {
-                clientImageAltAttributes: ['foo', 'bar', null],
-                serverImageAltAttributes: ['foo', 'bar', null]
+                clientImages: [{ src: 'foo.png', alt: 'foo' }, { src: 'bar.png' }]
             });
-            expect(validatorFn).to.throw();
+            expect(validatorFn).to.throw('found images without an alt attribute:\nbar.png');
         });
         it('succeeds when there are no images', () => {
             const validatorFn = validator.bind(null, {
-                clientImageAltAttributes: [],
-                serverImageAltAttributes: []
+                clientImages: []
             });
             expect(validatorFn).to.not.throw();
         });
