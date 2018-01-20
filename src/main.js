@@ -72,6 +72,7 @@ testRunner.on('testingEnd', (successCount, failCount) => {
     }
     if (failCount) {
         console.log(colors.red(`  ${failCount} failing`));
+        process.exitCode = 1;
     }
     console.log();
 });
