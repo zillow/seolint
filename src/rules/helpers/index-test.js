@@ -41,6 +41,12 @@ describe('rule helpers', () => {
             );
             expect(getTitle($)).to.equal('Page title');
         });
+        it('has space around title', () => {
+            const $ = cheerio.load(
+                '<html><head><title>      Page title      </title></head><body><svg xmlns="http://www.w3.org/2000/svg"><title>This is an svg title</title></svg></body></html>'
+            );
+            expect(getTitle($)).to.equal('Page title');
+        });
     });
 
     describe('getDescription', () => {

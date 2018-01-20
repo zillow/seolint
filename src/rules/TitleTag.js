@@ -24,6 +24,9 @@ module.exports = {
             expect(serverTitle, 'client and server titles should match').to.equal(clientTitle);
         }
 
-        expect(clientTitle.length, 'title length should not be more than 60 characters').to.be.at.most(60);
+        expect(
+            clientTitle.length,
+            `title length should not be more than 60 characters:\n"${clientTitle}"\n`
+        ).to.be.at.most(60);
     }
 };

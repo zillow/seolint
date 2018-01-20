@@ -20,7 +20,7 @@ module.exports = {
     getTitle: $ => {
         const node = $('head title');
         if (node.length) {
-            return node.text();
+            return node.text().trim();
         }
         return null;
     },
