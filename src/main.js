@@ -58,14 +58,13 @@ testRunner.on('ruleEnd', (url, rule, error, parserOverride, validatorOverride) =
     }
 
     if (!error) {
-        console.log(`    ${colors.green(`✓`)} ${rule}${overrides}`);
+        console.log(`    ${colors.green(`✓`)} ${colors.gray(rule)}${overrides}`);
     } else {
-        console.log(`    ${colors.red(`✗`)} ${rule}${overrides}`);
-        console.log(`      ${error}\n`);
+        console.log(`    ${colors.red(`✗`)} ${colors.gray(rule)}${overrides}`);
     }
 });
 
-testRunner.on('testingEnd', (successCount, failCount) => {
+testRunner.on('testingEnd', (successCount, failCount, results, errors) => {
     console.log('\n');
     if (successCount) {
         console.log(colors.green(`  ${successCount} passing`));
@@ -75,6 +74,12 @@ testRunner.on('testingEnd', (successCount, failCount) => {
         process.exitCode = 1;
     }
     console.log();
+
+    errors.forEach(({ url, rule, error }) => {
+        console.log(`${rule}: ${url}`);
+        console.log(colors.red(error.message));
+        console.log();
+    });
 });
 
 // Initialize crawler

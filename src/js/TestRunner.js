@@ -23,9 +23,12 @@ util.inherits(TestRunner, EventEmitter);
  */
 TestRunner.prototype.run = function(pages) {
     this.emit('testingBegin');
+    const results = {};
+    const errors = [];
 
     _.forEach(pages, ({ client, server }, url) => {
         this.emit('pageBegin', url);
+        results[url] = {};
 
         this.rules.forEach(rule => {
             this.emit('ruleBegin', url, rule.name);
@@ -56,13 +59,27 @@ TestRunner.prototype.run = function(pages) {
             } catch (e) {
                 this.failCount += 1;
                 error = e;
+
+                // Add error
+                errors.push({
+                    url,
+                    rule: rule.name,
+                    error
+                });
             }
+
+            // Add to results
+            results[url][rule.name] = {
+                error,
+                parserOverride,
+                validatorOverride
+            };
 
             this.emit('ruleEnd', url, rule.name, error, parserOverride, validatorOverride);
         });
     });
 
-    this.emit('testingEnd', this.successCount, this.failCount);
+    this.emit('testingEnd', this.successCount, this.failCount, results, errors);
 };
 
 /**
