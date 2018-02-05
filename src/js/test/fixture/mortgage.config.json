@@ -1,6 +1,9 @@
 {
     "hostname": "https://www.mm1.zillow.net/",
     "rulesdir": "/examples/rules",
+    "rules": {
+        "ConsistentTrailingSlash.js": "warn"
+    },
     "urls": [
         "https://www.zillow.com/mortgage-rates/",
         "https://www.zillow.com/refinance/",

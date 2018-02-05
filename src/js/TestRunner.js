@@ -9,6 +9,7 @@ const RULES_DIR = path.join(__dirname, '../rules');
 function TestRunner({ routeConfig }) {
     this.routeConfig = routeConfig || {};
     this.successCount = 0;
+    this.warningCount = 0;
     this.failCount = 0;
     this.rules = [];
     this.loadRules(RULES_DIR);
@@ -25,61 +26,82 @@ TestRunner.prototype.run = function(pages) {
     this.emit('testingBegin');
     const results = {};
     const errors = [];
+    const warnings = [];
 
     _.forEach(pages, ({ client, server }, url) => {
         this.emit('pageBegin', url);
         results[url] = {};
 
         this.rules.forEach(rule => {
-            this.emit('ruleBegin', url, rule.name);
+            const urlConfig = this.routeConfig[url] || {};
 
-            const config = this.routeConfig[rule.name] || {};
+            let ruleConfig = {};
+            if (urlConfig.rules) {
+                ruleConfig = urlConfig.rules[rule.name] || {};
+            }
+
+            // Skip rules that are turned off
+            if (ruleConfig.level === 0) {
+                return;
+            }
+
+            this.emit('ruleBegin', url, rule.name);
 
             let parserFn = rule.parser;
             let parserOverride = false;
-            if (config.parser) {
-                parserFn = config.parser;
+            if (ruleConfig.parser) {
+                parserFn = ruleConfig.parser;
                 parserOverride = true;
             }
 
             let validatorFn = rule.validator;
             let validatorOverride = false;
-            if (config.validator) {
-                validatorFn = config.validator;
+            if (ruleConfig.validator) {
+                validatorFn = ruleConfig.validator;
                 validatorOverride = true;
             }
 
             // Parse the pages for validation data
-            const parsed = parserFn({ url, client, server }, config.options);
+            const parsed = parserFn({ url, client, server }, ruleConfig.options);
 
             let error;
+            let warning;
             try {
-                validatorFn(parsed, config.options);
+                validatorFn(parsed, ruleConfig.options);
                 this.successCount += 1;
             } catch (e) {
-                this.failCount += 1;
-                error = e;
-
-                // Add error
-                errors.push({
-                    url,
-                    rule: rule.name,
-                    error
-                });
+                if (ruleConfig.level === 1) {
+                    this.warningCount += 1;
+                    warning = e;
+                    warnings.push({
+                        url,
+                        rule: rule.name,
+                        warning
+                    });
+                } else {
+                    this.failCount += 1;
+                    error = e;
+                    errors.push({
+                        url,
+                        rule: rule.name,
+                        error
+                    });
+                }
             }
 
             // Add to results
             results[url][rule.name] = {
                 error,
+                warning,
                 parserOverride,
                 validatorOverride
             };
 
-            this.emit('ruleEnd', url, rule.name, error, parserOverride, validatorOverride);
+            this.emit('ruleEnd', url, rule.name, error, warning, parserOverride, validatorOverride);
         });
     });
 
-    this.emit('testingEnd', this.successCount, this.failCount, results, errors);
+    this.emit('testingEnd', this.successCount, this.warningCount, this.failCount, results, errors, warnings);
 };
 
 /**

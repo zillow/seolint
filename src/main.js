@@ -41,7 +41,7 @@ testRunner.on('pageBegin', url => {
     console.log(`  Testing: ${url}`);
 });
 
-testRunner.on('ruleEnd', (url, rule, error, parserOverride, validatorOverride) => {
+testRunner.on('ruleEnd', (url, rule, error, warning, parserOverride, validatorOverride) => {
     // Create overrides warning
     let overrides = [];
     if (parserOverride || validatorOverride) {
@@ -51,30 +51,41 @@ testRunner.on('ruleEnd', (url, rule, error, parserOverride, validatorOverride) =
         if (validatorOverride) {
             overrides.push('validator');
         }
-        const text = `⚠  overriding ${overrides.join(', ')}`;
+        const text = `⚑ overriding ${overrides.join(', ')}`;
         overrides = ` (${colors.yellow(text)})`;
     } else {
         overrides = '';
     }
 
-    if (!error) {
-        console.log(`    ${colors.green(`✓`)} ${colors.gray(rule)}${overrides}`);
-    } else {
+    if (error) {
         console.log(`    ${colors.red(`✗`)} ${colors.gray(rule)}${overrides}`);
+    } else if (warning) {
+        console.log(`    ${colors.yellow(`⚑`)} ${colors.gray(rule)}${overrides}`);
+    } else {
+        console.log(`    ${colors.green(`✓`)} ${colors.gray(rule)}${overrides}`);
     }
 });
 
-testRunner.on('testingEnd', (successCount, failCount, results, errors) => {
+testRunner.on('testingEnd', (successCount, warningCount, failCount, results, errors, warnings) => {
     console.log('\n');
     if (successCount) {
         console.log(colors.green(`  ${successCount} passing`));
+    }
+    if (warningCount) {
+        console.log(colors.yellow(`  ${warningCount} warnings`));
     }
     if (failCount) {
         console.log(colors.red(`  ${failCount} failing`));
         process.exitCode = 1;
     }
+
     console.log();
 
+    warnings.forEach(({ url, rule, warning }) => {
+        console.log(`${rule}: ${url}`);
+        console.log(colors.yellow(warning.message));
+        console.log();
+    });
     errors.forEach(({ url, rule, error }) => {
         console.log(`${rule}: ${url}`);
         console.log(colors.red(error.message));
