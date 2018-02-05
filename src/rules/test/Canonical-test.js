@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
 const { parser, validator } = require('../Canonical');
 
-describe('Canonical.js', () => {
+describe('Canonical', () => {
     describe('parser', () => {
         it('parses body canonicals', () => {
             const parsed = parser({

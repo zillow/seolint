@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
 const { parser, validator } = require('../TitleTag');
 
-describe('TitleTag.js', () => {
+describe('TitleTag', () => {
     describe('parser', () => {
         it('client and server title', () => {
             const parsed = parser({

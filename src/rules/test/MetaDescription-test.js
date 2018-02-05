@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
 const { parser, validator } = require('../MetaDescription');
 
-describe('MetaDescription.js', () => {
+describe('MetaDescription', () => {
     describe('parser', () => {
         it('client and server description', () => {
             const parsed = parser({

@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
 const { parser, validator } = require('../MixedContent');
 
-describe('MixedContent.js', () => {
+describe('MixedContent', () => {
     describe('parser', () => {
         it('has no resources', () => {
             const parsed = parser({

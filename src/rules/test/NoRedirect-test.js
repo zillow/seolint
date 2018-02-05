@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
 const { parser, validator } = require('../NoRedirect');
 
-describe('NoRedirect.js', () => {
+describe('NoRedirect', () => {
     describe('parser', () => {
         it('no redirect', () => {
             const parsed = parser({

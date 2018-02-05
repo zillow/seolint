@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
 const { parser, validator } = require('../H1Tag');
 
-describe('H1Tag.js', () => {
+describe('H1Tag', () => {
     describe('parser', () => {
         it('multiple h1s', () => {
             const parsed = parser({

@@ -6,7 +6,7 @@ module.exports = {
     hostname: 'https://www.mm1.zillow.net/',
     rulesdir: path.join(__dirname, 'rules'),
     rules: {
-        'ConsistentTrailingSlash.js': 'warn'
+        ConsistentTrailingSlash: 'warn'
     },
     urls: [
         // Mortgage rates
@@ -24,7 +24,7 @@ module.exports = {
         {
             url: 'https://www.zillow.com/30_Year_Fixed_Mortgage_Rates/',
             rules: {
-                'NoRedirect.js': {
+                NoRedirect: {
                     validator: ({ referer, href }) => {
                         expect(new URL(referer).pathname).to.equal('/30_Year_Fixed_Mortgage_Rates/');
                         expect(new URL(href).pathname).to.equal('/mortgage-rates/30-year-fixed/');
@@ -35,7 +35,7 @@ module.exports = {
         {
             url: 'https://www.zillow.com/20_Year_Fixed_Mortgage_Rates/',
             rules: {
-                'NoRedirect.js': {
+                NoRedirect: {
                     validator: ({ referer, href }) => {
                         expect(new URL(referer).pathname).to.equal('/20_Year_Fixed_Mortgage_Rates/');
                         expect(new URL(href).pathname).to.equal('/mortgage-rates/20-year-fixed/');
@@ -46,7 +46,7 @@ module.exports = {
         {
             url: 'https://www.zillow.com/15_Year_Fixed_Mortgage_Rates/',
             rules: {
-                'NoRedirect.js': {
+                NoRedirect: {
                     validator: ({ referer, href }) => {
                         expect(new URL(referer).pathname).to.equal('/15_Year_Fixed_Mortgage_Rates/');
                         expect(new URL(href).pathname).to.equal('/mortgage-rates/15-year-fixed/');
@@ -57,7 +57,7 @@ module.exports = {
         {
             url: 'https://www.zillow.com/7-1_ARM_Mortgage_Rates/',
             rules: {
-                'NoRedirect.js': {
+                NoRedirect: {
                     validator: ({ referer, href }) => {
                         expect(new URL(referer).pathname).to.equal('/7-1_ARM_Mortgage_Rates/');
                         expect(new URL(href).pathname).to.equal('/mortgage-rates/7-1-arm/');
@@ -68,7 +68,7 @@ module.exports = {
         {
             url: 'https://www.zillow.com/5-1_ARM_Mortgage_Rates/',
             rules: {
-                'NoRedirect.js': {
+                NoRedirect: {
                     validator: ({ referer, href }) => {
                         expect(new URL(referer).pathname).to.equal('/5-1_ARM_Mortgage_Rates/');
                         expect(new URL(href).pathname).to.equal('/mortgage-rates/5-1-arm/');
@@ -79,7 +79,7 @@ module.exports = {
         {
             url: 'https://www.zillow.com/Washington_Mortgage_Rates/',
             rules: {
-                'NoRedirect.js': {
+                NoRedirect: {
                     validator: ({ referer, href }) => {
                         expect(new URL(referer).pathname).to.equal('/Washington_Mortgage_Rates/');
                         expect(new URL(href).pathname).to.equal('/mortgage-rates/wa/');
@@ -90,7 +90,7 @@ module.exports = {
         {
             url: 'https://www.zillow.com/Mortgage_Rates/',
             rules: {
-                'NoRedirect.js': {
+                NoRedirect: {
                     validator: ({ referer, href }) => {
                         expect(new URL(referer).pathname).to.equal('/Mortgage_Rates/');
                         expect(new URL(href).pathname).to.equal('/mortgage-rates/');
@@ -103,7 +103,7 @@ module.exports = {
         {
             url: 'https://www.zillow.com/mortgage-calculator/house-affordability/',
             rules: {
-                'TitleTag.js': {
+                TitleTag: {
                     validator: ({ clientTitle, serverTitle }) => {
                         // ZM-15463: Exception for for this route for this title only. If we change the title, we should shorten it as well.
                         expect(serverTitle).to.equal(
@@ -122,7 +122,7 @@ module.exports = {
         {
             url: 'https://www.zillow.com/mortgage-calculator/payment/',
             rules: {
-                'NoRedirect.js': {
+                NoRedirect: {
                     validator: ({ referer, href }) => {
                         expect(new URL(referer).pathname).to.equal('/mortgage-calculator/payment/');
                         expect(new URL(href).pathname).to.equal('/mortgage-calculator/');
@@ -134,7 +134,7 @@ module.exports = {
         {
             url: 'https://www.zillow.com/pre-approval/',
             rules: {
-                'Canonical.js': {
+                Canonical: {
                     options: {
                         expectedPath: '/home-loans/pre-approval/'
                     }
@@ -144,7 +144,7 @@ module.exports = {
         {
             url: 'https://www.zillow.com/home-loans/#/pre-approval',
             rules: {
-                'Canonical.js': {
+                Canonical: {
                     options: {
                         expectedPath: '/home-loans/pre-approval/'
                     }
@@ -154,7 +154,7 @@ module.exports = {
         {
             url: 'https://www.zillow.com/pre-qualify/',
             rules: {
-                'Canonical.js': {
+                Canonical: {
                     options: {
                         expectedPath: '/home-loans/pre-qualify/'
                     }
@@ -164,7 +164,7 @@ module.exports = {
         {
             url: 'https://www.zillow.com/home-loans/#/pre-qualify',
             rules: {
-                'Canonical.js': {
+                Canonical: {
                     options: {
                         expectedPath: '/home-loans/pre-qualify/'
                     }
@@ -174,7 +174,7 @@ module.exports = {
         {
             url: 'https://www.zillow.com/home-loans/#/landing',
             rules: {
-                'Canonical.js': {
+                Canonical: {
                     options: {
                         expectedPath: '/home-loans/'
                     }
@@ -184,7 +184,7 @@ module.exports = {
         {
             url: 'https://www.zillow.com/home-loans/#/purchase',
             rules: {
-                'Canonical.js': {
+                Canonical: {
                     options: {
                         expectedPath: '/home-loans/purchase/'
                     }
@@ -194,7 +194,7 @@ module.exports = {
         {
             url: 'https://www.zillow.com/home-loans/#/refinance',
             rules: {
-                'Canonical.js': {
+                Canonical: {
                     options: {
                         expectedPath: '/home-loans/refinance/'
                     }
@@ -204,7 +204,7 @@ module.exports = {
         {
             url: 'https://www.zillow.com/home-loans/#/va',
             rules: {
-                'Canonical.js': {
+                Canonical: {
                     options: {
                         expectedPath: '/home-loans/va/'
                     }
@@ -228,7 +228,7 @@ module.exports = {
         {
             url: 'https://www.zillow.com/mortgage/browse/?ratesType=rates&stateAbbr=al',
             rules: {
-                'Canonical.js': {
+                Canonical: {
                     options: {
                         expectedPath: '/mortgage/browse/'
                     }
@@ -238,7 +238,7 @@ module.exports = {
         {
             url: 'https://www.zillow.com/mortgage/browse/?ratesType=refinance&stateAbbr=al',
             rules: {
-                'Canonical.js': {
+                Canonical: {
                     options: {
                         expectedPath: '/mortgage/browse/'
                     }
@@ -248,7 +248,7 @@ module.exports = {
         {
             url: 'https://www.zillow.com/mortgage/browse/?ratesType=lenders&stateAbbr=al',
             rules: {
-                'Canonical.js': {
+                Canonical: {
                     options: {
                         expectedPath: '/mortgage/browse/'
                     }

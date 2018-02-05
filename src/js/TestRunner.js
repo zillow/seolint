@@ -119,7 +119,7 @@ TestRunner.prototype.loadRules = function(dir) {
                 if (stats.isFile()) {
                     // eslint-disable-next-line import/no-dynamic-require
                     const rule = require(filePath);
-                    rule.name = ruleName;
+                    rule.name = ruleName.replace('.js', '');
                     return rule;
                 }
                 return null;
