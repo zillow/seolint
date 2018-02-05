@@ -38,23 +38,23 @@ seolint --help
 
 Below are the rules run for every url you give to SEOLint. These are general recommendations that you may want to [override with custom behavior](https://github.com/zillow/seolint#rule-customization).
 
-#### H1Tag.js
+#### H1Tag
 
 Verifies that the page has one and only one `<h1>` tag.
 
-#### TitleTag.js
+#### TitleTag
 
 Verifies that the page has a `<title>` tag with an appropriate length (no more than 60 characters).
 
 * https://moz.com/learn/seo/title-tag
 
-#### MetaDescription.js
+#### MetaDescription
 
 Verifies that the page has a `<meta name="description" content="" />` tag with an appropriate length (between 50-300 characters).
 
 * https://moz.com/learn/seo/meta-description
 
-#### ImageAltAttribute.js
+#### ImageAltAttribute
 
 Verifies that all `<img>` tags have an alt text attribute.
 Decorative images that don't add information to the content of the page should have an empty alt attribute (`alt=""`) so they can be ignored by screen readers.
@@ -62,17 +62,17 @@ Decorative images that don't add information to the content of the page should h
 * https://moz.com/learn/seo/alt-text
 * https://www.w3.org/WAI/tutorials/images/decorative/
 
-#### NoRedirect.js
+#### NoRedirect
 
 Verifies that the page was not redirected. You can customize the validator to alternatively verify that the page _was_ redirected.
 
-#### MixedContent.js
+#### MixedContent
 
 Verifies that the page has no mixed-content resources.
 
 * https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content
 
-#### ConsistentTrailingSlash.js
+#### ConsistentTrailingSlash
 
 Verifies that all the links on your page use consistent trailing slashes.
 
@@ -82,7 +82,7 @@ Note: Inconsistent trailing slashes are not necessarily a bad thing on their own
 you just have to make sure that your redirects are set up correctly and you are linking to the correct version.
 Ultimately we want to prevent duplicate content and unnecessary redirects.
 
-#### Canonical.js
+#### Canonical
 
 Verifies that the page has one canonical link with a fully resolved url.
 
@@ -117,17 +117,21 @@ module.exports = {
             // {string} url
             url: 'https://www.zillow.com/mortgage-rates/',
 
-            // {object} custom rule configuration
-            'TitleTag.js': {
+            // {object} url rule configurations
+            rules: {
+                TitleTag: {
+                    // {number | string} reporting level for this rule
+                    level: 'warn',
 
-                // {object} rule specific options
-                options: {},
+                    // {object} rule specific options
+                    options: {},
 
-                // {function} override the default parser
-                parser: (url, clientPage, serverPage) => ({ myClientTitle: 'foo', myServerTitle: 'foo' }),
+                    // {function} override the default parser
+                    parser: (url, clientPage, serverPage) => ({ myClientTitle: 'foo', myServerTitle: 'foo' }),
 
-                // {function} override the default validator
-                validator: ({ myClientTitle, myServerTitle }) => { expect(myClientTitle).to.equal(myServerTitle); }
+                    // {function} override the default validator
+                    validator: ({ myClientTitle, myServerTitle }) => { expect(myClientTitle).to.equal(myServerTitle); }
+                }
             }
         }
     ],
@@ -136,13 +140,57 @@ module.exports = {
     hostname: 'https://www.zillow.com/',
 
     // {string} directory of custom rules to include
-    rulesdir: path.join(__dirname, 'path/to/my/rules')
+    rulesdir: path.join(__dirname, 'path/to/my/rules'),
+    
+    // {object} global rule configurations
+    rules: {
+        TitleTag: 'off'
+    }
 }
 ```
 
 Note: If you are using a JavaScript configuration file that has third-party module dependencies (e.g. chai), make sure to install those dependencies at the location of your config file, otherwise seolint will fail. It's a good idea to `npm i --save-dev` those dependencies if your seolint config file lives alongside your `package.json`.
 
-## Rule Customization
+## Configuring Rules
+
+You can change the severity of rules by changing the rule level in your configuration. By default, all rules run with an `"error"` level. If any rule fails at the `"error"` level, the program will finish with an exit code of 1. Alternatively, you can run rules at the `"warn"` level which will not trigger an exit code of 1. To turn a rule off complete, set the level to `"off"`.
+
+You can also use numeric levels `2`, `1`, and `0`, for `"error"`, `"warn"`, and `"off"` respectively.
+
+### Global Configuration
+
+To change the level of a rule for all urls, add the configuration at the root of your configuration file:
+
+```javascript
+{
+    rules: {
+          TitleTag: "warn",
+          Canonical: "off",
+          MixedContent: "error"
+    }
+}
+```
+
+### URL Specific Configuration
+
+You can override global configurations for any given url by adding a rules object to your url configuration:
+
+```javascript
+{
+    urls: [
+        {
+            url: 'https://www.zillow.com/',
+            rules: {
+                TitleTag: "warn",
+                Canonical: "off",
+                MixedContent: "error"
+            }
+        }
+    ]
+}
+```
+
+## Advanced Configuration
 
 In some cases, you will want to override the default behavior of rules in your configuration file.
 Each rule consists of a parser and a validator function.
@@ -199,56 +247,56 @@ You can override the parser, the validator, or both, but be mindful when changin
 
 Below you will find the default return values for all the SEO rules.
 
-#### H1Tag.js
+#### H1Tag
 
 ##### `parser => { clientH1s, serverH1s }`
 
 * `clientH1s` (`array`): Array of h1 text strings found on the client rendering
 * `serverH1s` (`array`): Array of h1 text strings found on the server rendering
 
-#### TitleTag.js
+#### TitleTag
 
 ##### `parser => { clientTitle, serverTitle }`
 
 * `clientTitle` (`string`): The client rendered title text
 * `serverTitle` (`string`): The server rendered title text
 
-#### MetaDescription.js
+#### MetaDescription
 
 ##### `parser => { clientDescription, serverDescription }`
 
 * `clientDescription` (`string`): The client rendered description content
 * `serverDescription` (`string`): The server rendered description content
 
-#### ImageAltAttribute.js
+#### ImageAltAttribute
 
 ##### `parser => { clientImages, serverImages }`
 
 * `clientImages` (`array`): Array of client rendered image objects including a `src` and `alt` property
 * `serverImages` (`array`): Array of server rendered image objects including a `src` and `alt` property
 
-#### NoRedirect.js
+#### NoRedirect
 
 ##### `parser => { referer, href }`
 
 * `referer` (`string`): The URL of the referring page that initiated the redirect.
 * `href` (`string`): The URL of the resulting page after the redirect.
 
-#### MixedContent.js
+#### MixedContent
 
 ##### `parser => { isSecure, insecureResources }`
 
 * `isSecure` (`boolean`): Is the requested URL a secure page.
 * `insecureResources` (`array`): An array of insecure URLs requested by the page.
 
-#### ConsistentTrailingSlash.js
+#### ConsistentTrailingSlash
 
 ##### `parser => { hrefsWithoutSlash, hrefs }`
 
 * `hrefsWithoutSlash` (`array`): An array of all hrefs from the same domain that do not have a trailing slash.
 * `href` (`array`): An array of all hrefs found on the page.
 
-#### Canonical.js
+#### Canonical
 
 ##### `options`
 
