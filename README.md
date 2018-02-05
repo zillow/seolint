@@ -153,7 +153,7 @@ Note: If you are using a JavaScript configuration file that has third-party modu
 
 ## Configuring Rules
 
-You can change the severity of rules by changing the rule level in your configuration. By default, all rules run with an `"error"` level. If any rule fails at the `"error"` level, the program will finish with an exit code of 1. Alternatively, you can run rules at the `"warn"` level which will not trigger an exit code of 1. To turn a rule off complete, set the level to `"off"`.
+You can change the severity of rules by changing the rule level in your configuration. By default, all rules run with an `"error"` level. If any rule fails at the `"error"` level, the program will finish with an exit code of 1. Alternatively, you can run rules at the `"warn"` level which will not trigger an exit code of 1. To turn a rule off completely, set the level to `"off"`.
 
 You can also use numeric levels `2`, `1`, and `0`, for `"error"`, `"warn"`, and `"off"` respectively.
 
