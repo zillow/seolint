@@ -197,7 +197,7 @@ Each rule consists of a parser and a validator function.
 After SEOLint renders your page, it passes all the render data to the parser function,
 the result of which is passed to the validator.
 
-Client rendering is done with [PhantomJs](https://github.com/amir20/phantomjs-node) and server rendering is done with [request](https://github.com/request/request).
+Client rendering is done with [puppeteer](https://github.com/GoogleChrome/puppeteer) and server rendering is done with [request](https://github.com/request/request).
 
 ### `parser(data, options)`
 
@@ -216,10 +216,10 @@ Below is the structure of parser `data`:
         // {object} Resource data for each requested resource
         resources: {
             'resource url': {
-                // {object} The requestData returned from phantom's onResourceRequested
+                // {object} The requestData returned from puppeteer's "request" page event
                 request: {},
 
-                // {object} The response returned from phantom's onResourceReceived
+                // {object} The response returned from puppeteers's "response" page event
                 response: {}
             }
         }
