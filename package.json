@@ -32,9 +32,8 @@
     "cheerio": "latest",
     "colors": "^1.1.2",
     "lodash": "^4.0.0",
-    "phantom": "^2.1.13",
-    "phantom-pool": "^1.2.2",
     "ps-node": "^0.1.6",
+    "puppeteer": "^1.0.0",
     "request": "^2.73.0",
     "yargs": "^8.0.2"
   },

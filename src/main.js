@@ -96,9 +96,7 @@ testRunner.on('testingEnd', (successCount, warningCount, failCount, results, err
 // Initialize crawler
 // ------------------
 
-const crawler = new Crawler({
-    usePhantomPool: !config.disablePhantomPool
-});
+const crawler = new Crawler();
 
 crawler.on('crawlingEnd', pages => {
     console.log(colors.green(`\n\nCrawling complete!\n`));

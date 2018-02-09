@@ -1,67 +1,31 @@
-const phantom = require('phantom');
-const waitForPageResources = require('./waitForPageResources');
+const puppeteer = require('puppeteer');
 
-/**
- * @param url {string} The url to render
- * @param providedInstance {Phantom} A phantom instance to create pages with.
- *   If not provided, a new phantom instance will be created.
- */
-module.exports = function(url, providedInstance) {
-    return new Promise((resolve, reject) => {
-        let localInstance;
-        let localPage;
-        let localResources;
-        let resourcesPromise;
+// https://github.com/GoogleChrome/puppeteer/issues/594
+// Currently launching a browser for each url, we should create a pool
+// of browsers and spread urls across that pool.
+process.setMaxListeners(Infinity);
 
-        // If a phantom instance is already provided, use that to create the page,
-        // otherwise create a new phantom instance.
-        let createPage;
-        if (providedInstance) {
-            createPage = providedInstance.createPage();
-        } else {
-            createPage = phantom.create().then(instance => {
-                localInstance = instance;
-                return instance.createPage();
-            });
-        }
+module.exports = async function(url) {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
 
-        createPage
-            .then(page => {
-                localPage = page;
-                resourcesPromise = waitForPageResources(page);
-
-                // Suppress logging page errors
-                page.on('onError', () => {});
-
-                return page.open(url);
-            })
-            .then(status => {
-                if (status === 'fail') {
-                    throw new Error(`Phantom page failed to open url: ${url}`);
-                }
-                return resourcesPromise;
-            })
-            .then(resources => {
-                localResources = resources;
-                return localPage.property('content');
-            })
-            .then(content => {
-                localPage.close();
-                if (localInstance) {
-                    localInstance.exit();
-                }
-                resolve({ content, resources: localResources });
-            })
-            .catch(error => {
-                if (process.env.NODE_ENV === 'development') {
-                    console.log(error);
-                }
-
-                localPage.close();
-                if (localInstance) {
-                    localInstance.exit();
-                }
-                reject(error);
-            });
+    const resources = {};
+    page.on('request', request => {
+        const requestUrl = request.url();
+        resources[requestUrl] = resources[url] || {};
+        resources[requestUrl].request = request;
     });
+    page.on('response', response => {
+        const responseUrl = response.url();
+        resources[responseUrl] = resources[url] || {};
+        resources[responseUrl].response = response;
+    });
+
+    await page.goto(url, { waitUntil: 'networkidle0' });
+    const content = await page.content();
+
+    await page.close();
+    await browser.close();
+
+    return { content, resources };
 };

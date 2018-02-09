@@ -1,12 +1,11 @@
 const _ = require('lodash');
 const EventEmitter = require('events').EventEmitter;
 const util = require('util');
+const clientRender = require('./clientRender');
 const serverRender = require('./serverRender');
-const ClientRenderer = require('./ClientRenderer');
 
 function Crawler(options) {
     this.options = {
-        usePhantomPool: true,
         ...options
     };
     this.pages = {};
@@ -22,10 +21,6 @@ util.inherits(Crawler, EventEmitter);
 Crawler.prototype.crawl = function(urls) {
     this.emit('crawlingBegin');
 
-    const clientRenderer = new ClientRenderer({
-        usePhantomPool: this.options.usePhantomPool
-    });
-
     Promise.all(
         _.map(urls, (urlConfig, url) => {
             // Do not crawl pages twice
@@ -36,7 +31,7 @@ Crawler.prototype.crawl = function(urls) {
             this.emit('pageBegin', url);
 
             this.emit('clientRenderBegin', url);
-            const clientPromise = clientRenderer.render(url).then(
+            const clientPromise = clientRender(url).then(
                 // Successfully client rendered
                 page => {
                     this.emit('clientRenderEnd', url, page);
@@ -80,12 +75,10 @@ Crawler.prototype.crawl = function(urls) {
     ).then(
         // All rendering promises successful
         () => {
-            clientRenderer.destroy();
             this.emit('crawlingEnd', this.pages);
         },
         // Unexpected error while rendering
         error => {
-            clientRenderer.destroy();
             this.emit('crawlingError', error);
         }
     );

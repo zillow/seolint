@@ -35,14 +35,15 @@ describe('commandLine', () => {
             const argv = [
                 'node',
                 'index.js',
-                '--disablePhantomPool',
+                '--rulesdir',
+                'dir',
                 'https://www.zillow.com/',
                 'https://www.zillow.com/mortgage-rates/'
             ];
             const config = parse(argv);
             expect(config).to.eql({
                 ...DEFAULT_CONFIG,
-                disablePhantomPool: true,
+                rulesdir: 'dir',
                 urls: ['https://www.zillow.com/', 'https://www.zillow.com/mortgage-rates/']
             });
         });
@@ -53,12 +54,13 @@ describe('commandLine', () => {
                 'index.js',
                 'https://www.zillow.com/',
                 'https://www.zillow.com/mortgage-rates/',
-                '--disablePhantomPool'
+                '--rulesdir',
+                'dir'
             ];
             const config = parse(argv);
             expect(config).to.eql({
                 ...DEFAULT_CONFIG,
-                disablePhantomPool: true,
+                rulesdir: 'dir',
                 urls: ['https://www.zillow.com/', 'https://www.zillow.com/mortgage-rates/']
             });
         });
@@ -68,13 +70,14 @@ describe('commandLine', () => {
                 'node',
                 'index.js',
                 'https://www.zillow.com/',
-                '--disablePhantomPool',
+                '--rulesdir',
+                'dir',
                 'https://www.zillow.com/mortgage-rates/'
             ];
             const config = parse(argv);
             expect(config).to.eql({
                 ...DEFAULT_CONFIG,
-                disablePhantomPool: true,
+                rulesdir: 'dir',
                 urls: ['https://www.zillow.com/', 'https://www.zillow.com/mortgage-rates/']
             });
         });

@@ -10,8 +10,4 @@ if (config.error) {
     process.exit(1);
 }
 
-if (config.kill) {
-    require(path.join(__dirname, 'src/kill'));
-} else {
-    require(path.join(__dirname, 'src/main'));
-}
+require(path.join(__dirname, 'src/main'));

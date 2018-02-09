@@ -16,17 +16,6 @@ const CLI_OPTIONS = {
     hostname: {
         description: 'URLs are run with the specified hostname (e.g. https://localhost:8443/)',
         type: 'string'
-    },
-    disablePhantomPool: {
-        description:
-            'A pool of phantom processes is used for faster client rendering. You can try disabling this if you are experiencing problems.',
-        type: 'boolean',
-        default: false
-    },
-    kill: {
-        alias: 'k',
-        description: 'Kill hanging phantom processes',
-        type: 'boolean'
     }
 };
 
