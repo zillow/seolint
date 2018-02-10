@@ -140,10 +140,8 @@ module.exports = {
     rules: {
         TitleTag: 'off'
     }
-}
+};
 ```
-
-Note: If you are using a JavaScript configuration file that has third-party module dependencies (e.g. chai), make sure to install those dependencies at the location of your config file, otherwise seolint will fail. It's a good idea to `npm i --save-dev` those dependencies if your seolint config file lives alongside your `package.json`.
 
 ## Configuring Rules
 
@@ -243,6 +241,36 @@ Below is the structure of parser `data`:
 ### `validator(parsed, options)`
 
 Validators are simple functions that take the output of the parser function as input. If the validator runs without throwing an error, the test is successful. If you want the validator to fail, just throw an error. The default validators use the [chai assertion library](http://chaijs.com/api/bdd/) for validating the parsed page data.
+
+### seolint.config.js
+
+`parser` and `validator` overrides should go on the rules object alongside the `level` and `options` keys.
+Just like the latter, the overrides can be global or specific to a URL.
+
+Note: If you are using a JavaScript configuration file that has third-party module dependencies (e.g. chai), make sure to install those dependencies at the location of your config file, otherwise seolint will fail. It's a good idea to `npm i --save-dev` those dependencies if your seolint config file lives alongside your `package.json`.
+
+```javascript
+const expect = require('chai').expect;
+const path = require('path');
+
+module.exports = {
+    urls: [{
+        url: 'https://www.zillow.com/mortgage-rates/',
+        rules: {
+            TitleTag: {
+                // {function} locally override the default parser
+                parser: (url, clientPage, serverPage) => ({ myClientTitle: 'foo', myServerTitle: 'foo' })
+            }
+        }
+    ],
+    rules: {
+        TitleTag: {
+            // {function} globally override the default validator
+            validator: ({ myClientTitle, myServerTitle }) => { expect(myClientTitle).to.equal(myServerTitle); }
+        }
+    }
+};
+```
 
 ### Default Parsing Functions
 
