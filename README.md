@@ -39,23 +39,23 @@ seolint --help
 
 Below are the rules run for every url you give to SEOLint. These are general recommendations that you may want to configure, override, or disable.
 
-#### H1Tag
+#### H1Tag (`"error"`)
 
 Verifies that the page has one and only one `<h1>` tag.
 
-#### TitleTag
+#### TitleTag (`"error"`)
 
 Verifies that the page has a `<title>` tag with an appropriate length (no more than 60 characters).
 
 * https://moz.com/learn/seo/title-tag
 
-#### MetaDescription
+#### MetaDescription (`"error"`)
 
 Verifies that the page has a `<meta name="description" content="" />` tag with an appropriate length (between 50-300 characters).
 
 * https://moz.com/learn/seo/meta-description
 
-#### ImageAltAttribute
+#### ImageAltAttribute (`"error"`)
 
 Verifies that all `<img>` tags have an alt text attribute.
 Decorative images that don't add information to the content of the page should have an empty alt attribute (`alt=""`) so they can be ignored by screen readers.
@@ -63,11 +63,11 @@ Decorative images that don't add information to the content of the page should h
 * https://moz.com/learn/seo/alt-text
 * https://www.w3.org/WAI/tutorials/images/decorative/
 
-#### NoRedirect
+#### NoRedirect (`"error"`)
 
 Verifies that the page was not redirected. You can customize the validator to alternatively verify that the page _was_ redirected.
 
-#### MixedContent
+#### MixedContent (`"error"`)
 
 Verifies that the page has no mixed-content resources.
 
@@ -88,7 +88,7 @@ Ultimately we want to prevent duplicate content and unnecessary redirects.
 * `noSlash` (`boolean`): By default, the rule verifies that all links have a trailing slash.
 Set this to true to verify that all links do not have a trailing slash.
 
-#### Canonical
+#### Canonical (`"error"`)
 
 Verifies that the page has one canonical link with a fully resolved url.
 
