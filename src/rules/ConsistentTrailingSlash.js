@@ -15,39 +15,49 @@ module.exports = {
         const serverHrefs = getHrefs($server);
 
         const hrefs = _.uniq([...clientHrefs, ...serverHrefs]);
-        const hrefsWithoutSlash = hrefs.filter(href => {
+        const hrefsWithoutSlash = [];
+        const hrefsWithSlash = [];
+        hrefs.forEach(href => {
             // Remove query/hash params
             const trimmed = href.split('#')[0].split('?')[0];
-            if (trimmed.endsWith('/')) {
-                return false;
-            }
 
             // Empty string
             if (!trimmed) {
-                return false;
+                return;
             }
 
             // Ends in an extension
             // eslint-disable-next-line no-useless-escape
             if (/\/[^\/]+\.[^\/]+$/.test(trimmed)) {
-                return false;
+                return;
             }
 
+            // Is from the same host
             if (trimmed.startsWith('http') && !isSameHostname(url, trimmed)) {
-                return false;
+                return;
             }
 
-            return true;
+            if (trimmed.endsWith('/')) {
+                hrefsWithSlash.push(href);
+            } else {
+                hrefsWithoutSlash.push(href);
+            }
         });
 
         return {
             hrefs,
+            hrefsWithSlash,
             hrefsWithoutSlash
         };
     },
-    validator: ({ hrefsWithoutSlash /* , hrefs */ }) => {
-        // eslint-disable-next-line no-unused-expressions
-        expect(hrefsWithoutSlash, `found links without trailing slashes:\n${hrefsWithoutSlash.join('\n')}\n`).to.be
-            .empty;
+    validator: ({ hrefsWithSlash, hrefsWithoutSlash }, options) => {
+        if (options && options.noSlash) {
+            // eslint-disable-next-line no-unused-expressions
+            expect(hrefsWithSlash, `found links with trailing slashes:\n${hrefsWithSlash.join('\n')}\n`).to.be.empty;
+        } else {
+            // eslint-disable-next-line no-unused-expressions
+            expect(hrefsWithoutSlash, `found links without trailing slashes:\n${hrefsWithoutSlash.join('\n')}\n`).to.be
+                .empty;
+        }
     }
 };

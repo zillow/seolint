@@ -291,6 +291,11 @@ Below you will find the default return values for all the SEO rules.
 
 #### ConsistentTrailingSlash
 
+##### `options`
+
+* `noSlash` (`boolean`): By default, the rule verifies that all links have a trailing slash.
+Set this to true to verify that all links do not have a trailing slash.
+
 ##### `parser => { hrefsWithoutSlash, hrefs }`
 
 * `hrefsWithoutSlash` (`array`): An array of all hrefs from the same domain that do not have a trailing slash.
