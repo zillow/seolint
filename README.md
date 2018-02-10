@@ -3,7 +3,8 @@
 [![npm version](https://badge.fury.io/js/seolint.svg)](https://badge.fury.io/js/seolint)
 
 SEOLint is a linting tool for validating SEO best practices on your web pages.
-The tool supports both [server-side and client-side](https://github.com/zillow/seolint#server-side-vs-client-side-rendering) rendered web pages.
+For each URL given, the tool does a server-side and client-side render (using [request](https://github.com/request/request) and [puppeteer](https://github.com/GoogleChrome/puppeteer) respectively) and runs the content against a library of rules.
+Depending on your application, your server and client content can vary dramatically -- while search engines are very competent at crawling dynamic content, there are still some small "gotchas" that SEOLint helps you identify.
 
 ## Installation & Upgrading
 
@@ -72,7 +73,7 @@ Verifies that the page has no mixed-content resources.
 
 * https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content
 
-#### ConsistentTrailingSlash (default: `"warn"`)
+#### ConsistentTrailingSlash (`"warn"`)
 
 Verifies that all the links on your page use consistent trailing slashes.
 
@@ -209,8 +210,6 @@ the result of which is passed to the validator. Both parser and validator are gi
 SEO rules were broken up into separate parsers and validators so that you can tweak validation conditions without having to re-parse the render data.
 You can override the parser, the validator, or both, but be mindful when changing the parser as it will also change the input to the validator.
 
-Client rendering is done with [puppeteer](https://github.com/GoogleChrome/puppeteer) and server rendering is done with [request](https://github.com/request/request).
-
 ### `parser(data, options)`
 
 Below is the structure of parser `data`:
@@ -254,6 +253,8 @@ Validators are simple functions that take the output of the parser function as i
 
 ### Default Parsing Functions
 
+In the event that you want to override the validator only, the following default values will be passed to your validator:
+
 #### `H1TagParser => { clientH1s, serverH1s }`
 
 * `clientH1s` (`array`): Array of h1 text strings found on the client rendering
@@ -296,13 +297,3 @@ Validators are simple functions that take the output of the parser function as i
 * `clientCanonicalsBody` (`array`): An array of canonical links in the body of the client.
 * `serverCanonicalsHead` (`array`): An array of canonical links in the head of the server.
 * `serverCanonicalsBody` (`array`): An array of canonical links in the body of the server.
-
-## Server-side vs Client-side Rendering
-
-In the past, server-side rendering was considered mandatory for search engines to be able to crawl your website.
-Nowadays, search engines are very capable at crawling client-side rendered applications,
-however there are still some small discrepancies that SEOLint tries to identify.
-Most of the time these discrepancies come when your client-side application overwrites content that the server-side already produced (for example a meta description).
-We have found that it is important that either your client-side rendered application produces the same output as the the server-side rendering,
-or the values should be omitted by the server and written only by the client;
-SEOLint will validate server-side and client-side content whenever applicable.
