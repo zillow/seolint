@@ -3,7 +3,7 @@
 [![npm version](https://badge.fury.io/js/seolint.svg)](https://badge.fury.io/js/seolint)
 
 SEOLint is a linting tool for validating SEO best practices on your web pages.
-For each URL given, the tool does a server-side and client-side render (using [request](https://github.com/request/request) and [puppeteer](https://github.com/GoogleChrome/puppeteer) respectively) and runs the content against a library of rules.
+For each URL given, the tool does a server-side and client-side render (using [request](https://github.com/request/request) and [puppeteer](https://github.com/GoogleChrome/puppeteer) respectively) and runs the content against a library of SEO rules.
 Depending on your application, your server and client content can vary dramatically -- while search engines are very competent at crawling dynamic content, there are still some small "gotchas" that SEOLint helps you identify.
 
 ## Installation & Upgrading
