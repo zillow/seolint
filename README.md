@@ -104,7 +104,6 @@ Set this to specify a different expected canonical path.
 SEOLint supports JavaScript and JSON configuration files - you can see an example of each in the [examples folder](https://github.com/zillow/seolint/tree/master/examples).
 
 ```javascript
-const expect = require('chai').expect;
 const path = require('path');
 
 module.exports = {
