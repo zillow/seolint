@@ -40,8 +40,15 @@ TestRunner.prototype.run = function(pages) {
                 ruleConfig = urlConfig.rules[rule.name] || {};
             }
 
+            let level = 2;
+            if (typeof ruleConfig.level === 'number') {
+                level = ruleConfig.level;
+            } else if (typeof rule.level === 'number') {
+                level = rule.level;
+            }
+
             // Skip rules that are turned off
-            if (ruleConfig.level === 0) {
+            if (level === 0) {
                 return;
             }
 
@@ -70,7 +77,7 @@ TestRunner.prototype.run = function(pages) {
                 validatorFn(parsed, ruleConfig.options);
                 this.successCount += 1;
             } catch (e) {
-                if (ruleConfig.level === 1) {
+                if (level === 1) {
                     this.warningCount += 1;
                     warning = e;
                     warnings.push({

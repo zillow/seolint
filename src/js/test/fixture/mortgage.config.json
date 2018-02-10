@@ -2,7 +2,7 @@
     "hostname": "https://www.mm1.zillow.net/",
     "rulesdir": "/examples/rules",
     "rules": {
-        "ConsistentTrailingSlash": "warn"
+        "ConsistentTrailingSlash": "error"
     },
     "urls": [
         "https://www.zillow.com/mortgage-rates/",

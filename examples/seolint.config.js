@@ -6,7 +6,7 @@ module.exports = {
     hostname: 'https://www.mm1.zillow.net/',
     rulesdir: path.join(__dirname, 'rules'),
     rules: {
-        ConsistentTrailingSlash: 'warn'
+        ConsistentTrailingSlash: 'error'
     },
     urls: [
         // Mortgage rates

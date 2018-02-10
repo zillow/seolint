@@ -7,6 +7,7 @@ const { isSameHostname } = require('../js/urlHelpers');
 module.exports = {
     description: 'Verfies that all the links on your page use consistent trailing slashes',
     resources: ['https://webmasters.googleblog.com/2010/04/to-slash-or-not-to-slash.html'],
+    level: 1, // Warn by default
     parser: ({ url, client, server }) => {
         const $client = cheerio.load(client.content);
         const $server = cheerio.load(server.content);
