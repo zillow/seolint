@@ -125,13 +125,7 @@ module.exports = {
                     level: 'warn',
 
                     // {object} rule specific options
-                    options: {},
-
-                    // {function} override the default parser
-                    parser: (url, clientPage, serverPage) => ({ myClientTitle: 'foo', myServerTitle: 'foo' }),
-
-                    // {function} override the default validator
-                    validator: ({ myClientTitle, myServerTitle }) => { expect(myClientTitle).to.equal(myServerTitle); }
+                    options: {}
                 }
             }
         }
