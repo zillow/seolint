@@ -15,6 +15,7 @@ describe('ConsistentTrailingSlash', () => {
             });
             expect(parsed).to.eql({
                 hrefs: ['https://www.example.com/foo/?bar'],
+                hrefsWithSlash: ['https://www.example.com/foo/?bar'],
                 hrefsWithoutSlash: []
             });
         });
@@ -31,6 +32,7 @@ describe('ConsistentTrailingSlash', () => {
             });
             expect(parsed).to.eql({
                 hrefs: ['https://www.example.com/foo?bar'],
+                hrefsWithSlash: [],
                 hrefsWithoutSlash: ['https://www.example.com/foo?bar']
             });
         });
@@ -47,6 +49,7 @@ describe('ConsistentTrailingSlash', () => {
             });
             expect(parsed).to.eql({
                 hrefs: ['https://www.example.com/foo/#bar'],
+                hrefsWithSlash: ['https://www.example.com/foo/#bar'],
                 hrefsWithoutSlash: []
             });
         });
@@ -63,6 +66,7 @@ describe('ConsistentTrailingSlash', () => {
             });
             expect(parsed).to.eql({
                 hrefs: ['https://www.example.com/foo#bar'],
+                hrefsWithSlash: [],
                 hrefsWithoutSlash: ['https://www.example.com/foo#bar']
             });
         });
@@ -79,6 +83,7 @@ describe('ConsistentTrailingSlash', () => {
             });
             expect(parsed).to.eql({
                 hrefs: ['https://www.example.com/foo#bar/'],
+                hrefsWithSlash: [],
                 hrefsWithoutSlash: ['https://www.example.com/foo#bar/']
             });
         });
@@ -95,6 +100,7 @@ describe('ConsistentTrailingSlash', () => {
             });
             expect(parsed).to.eql({
                 hrefs: ['https://www.example.com/foo?bar/'],
+                hrefsWithSlash: [],
                 hrefsWithoutSlash: ['https://www.example.com/foo?bar/']
             });
         });
@@ -111,6 +117,7 @@ describe('ConsistentTrailingSlash', () => {
             });
             expect(parsed).to.eql({
                 hrefs: ['https://www.example.com/foo.barbaz'],
+                hrefsWithSlash: [],
                 hrefsWithoutSlash: []
             });
         });
@@ -127,6 +134,7 @@ describe('ConsistentTrailingSlash', () => {
             });
             expect(parsed).to.eql({
                 hrefs: ['https://www.zillow.com/foo'],
+                hrefsWithSlash: [],
                 hrefsWithoutSlash: []
             });
         });
@@ -151,6 +159,7 @@ describe('ConsistentTrailingSlash', () => {
                     'https://www.example.com/xyz/',
                     'https://www.example.com/baz'
                 ],
+                hrefsWithSlash: ['https://www.example.com/xyz/'],
                 hrefsWithoutSlash: [
                     'https://www.example.com/bar',
                     'http://www.example.com/abc',
@@ -164,16 +173,44 @@ describe('ConsistentTrailingSlash', () => {
         it('fails for any hrefs without a trailing slash', () => {
             const validatorFn = validator.bind(null, {
                 hrefs: ['https://www.example.com/bar'],
+                hrefsWithSlash: [],
                 hrefsWithoutSlash: ['https://www.example.com/bar']
             });
             expect(validatorFn).to.throw('found links without trailing slashes');
         });
 
-        it('succeeds if there are no hrefs with a trailing slash', () => {
+        it('succeeds if there are no hrefs without a trailing slash', () => {
             const validatorFn = validator.bind(null, {
                 hrefs: ['https://www.example.com/bar/'],
+                hrefsWithSlash: ['https://www.example.com/bar/'],
                 hrefsWithoutSlash: []
             });
+            expect(validatorFn).to.not.throw();
+        });
+
+        it('fails for any hrefs with a trailing slash with noSlashes option', () => {
+            const validatorFn = validator.bind(
+                null,
+                {
+                    hrefs: ['https://www.example.com/bar/'],
+                    hrefsWithSlash: ['https://www.example.com/bar/'],
+                    hrefsWithoutSlash: []
+                },
+                { noSlash: true }
+            );
+            expect(validatorFn).to.throw('found links with trailing slashes');
+        });
+
+        it('succeeds if there are no hrefs with a trailing slash with noSlashes option', () => {
+            const validatorFn = validator.bind(
+                null,
+                {
+                    hrefs: ['https://www.example.com/bar'],
+                    hrefsWithSlash: [],
+                    hrefsWithoutSlash: ['https://www.example.com/bar']
+                },
+                { noSlash: true }
+            );
             expect(validatorFn).to.not.throw();
         });
     });
