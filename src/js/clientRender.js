@@ -21,7 +21,7 @@ module.exports = async function(url) {
         resources[responseUrl].response = response;
     });
 
-    await page.goto(url, { waitUntil: 'networkidle0' });
+    await page.goto(url, { waitUntil: ['networkidle0', 'load', 'domcontentloaded'] });
     const content = await page.content();
 
     await page.close();
