@@ -1,6 +1,6 @@
 # SEOLint
 
-[![npm version](https://badge.fury.io/js/seolint.svg)](https://badge.fury.io/js/seolint)
+[![npm version](https://badge.fury.io/js/%40zillowgroup%2Fseolint.svg)](https://badge.fury.io/js/%40zillowgroup%2Fseolint)
 
 SEOLint is a linting tool for validating SEO best practices on your web pages.
 For each URL given, the tool does a server-side and client-side render (using [request](https://github.com/request/request) and [puppeteer](https://github.com/GoogleChrome/puppeteer) respectively) and runs the content against a library of SEO rules.
@@ -12,7 +12,7 @@ SEOLint requires node version 8.3.0 or greater. We highly recommend [nvm](https:
 Once you have node/npm, you can install/upgrade SEOLint globally with the following command:
 
 ```bash
-npm install -g seolint@latest
+npm install -g @zillowgroup/seolint@latest
 ```
 
 ## Usage
@@ -20,19 +20,19 @@ npm install -g seolint@latest
 To run SEOLint on a single url:
 
 ```bash
-seolint https://www.zillow.com/
+@zillowgroup/seolint https://www.zillow.com/
 ```
 
 To run with a [configuration file](https://github.com/zillow/seolint#seolintconfigjs):
 
 ```bash
-seolint --config seolint.config.js
+@zillowgroup/seolint --config seolint.config.js
 ```
 
 To see the full usage information:
 
 ```bash
-seolint --help
+@zillowgroup/seolint --help
 ```
 
 ## SEO Rules
@@ -188,7 +188,7 @@ You can write your own rules and include them when running tests.
 Custom rules follow the same format as the default rules with a `parser` and `validator` function (see the [default rules](https://github.com/zillow/seolint/tree/master/src/rules) or [examples](https://github.com/zillow/seolint/tree/master/examples/rules) for inspiration). To include your rules, specify `rulesdir` in your [configuration file](https://github.com/zillow/seolint#seolintconfigjs) or `--rulesdir` on the command line:
 
 ```bash
-seolint --rulesdir path/to/my/rules https://www.zillow.com/
+@zillowgroup/seolint --rulesdir path/to/my/rules https://www.zillow.com/
 ```
 
 ## Advanced Configuration
